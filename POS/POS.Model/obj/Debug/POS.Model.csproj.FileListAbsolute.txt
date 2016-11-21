@@ -1,0 +1,9 @@
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\POS.Model.dll
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\POS.Model.pdb
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\EntityFramework.dll
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.dll
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\EntityFramework.xml
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.xml
+E:\Project POS\pos-clone\POS\POS.Model\obj\Debug\POS.Model.dll
+E:\Project POS\pos-clone\POS\POS.Model\obj\Debug\POS.Model.pdb
+E:\Project POS\pos-clone\POS\POS.Model\obj\Debug\POS.Model.csprojResolveAssemblyReference.cache
