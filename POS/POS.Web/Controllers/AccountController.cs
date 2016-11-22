@@ -166,9 +166,9 @@ namespace POS.Web.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Register");
+                    //return RedirectToAction("Register");
                 }
-                AddErrors(result);
+                
                 using (POSContext context = new POSContext())
                 {
                     using (var dbTransaction = context.Database.BeginTransaction())
@@ -185,8 +185,8 @@ namespace POS.Web.Controllers
                             ModifiedOn = DateTime.Now
                         };
                         context.TEmployee.Add(item);
-                        //try { context.SaveChanges(); }
-                        //catch (Exception) { }
+                        try { context.SaveChanges(); }
+                        catch (Exception) { }
 
                         EmployeeOutlet vEOutlet = new EmployeeOutlet()
                         {
@@ -212,7 +212,9 @@ namespace POS.Web.Controllers
                             dbTransaction.Rollback();
                         }
                     }
+
                 }
+                AddErrors(result);
             }
 
 

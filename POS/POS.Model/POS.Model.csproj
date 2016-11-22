@@ -75,6 +75,7 @@
     <Compile Include="Suppliers.cs" />
     <Compile Include="TransferStock.cs" />
     <Compile Include="TransferStockDetail.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

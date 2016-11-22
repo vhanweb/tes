@@ -19,10 +19,10 @@
             @Html.DisplayFor(modelItem => item.VariantName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Ending)
+            @Html.DisplayFor(modelItem => item.Beginning)
         </td>
         <td>
-            <button type="button" class="btn btn-warning btn-xs btn-ok-item" data-id="@item.VariantID" data-judul="@item.VariantName" data-stok="@item.Ending"><i class="fa fa-check"></i></button>
+            <button type="button" class="btn btn-success btn-xs btn-ok-item" data-id="@item.VariantID" data-namavariant="@item.VariantName" data-stok="@item.Beginning"><i class="fa fa-check"></i></button>
         </td>
     </tr>
 }

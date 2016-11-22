@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using POS.DAL;
 using POS.Model;
 using POS.ViewModel;
+using Microsoft.AspNet.Identity;
 
 namespace POS.Web.Controllers
 {
@@ -20,14 +21,15 @@ namespace POS.Web.Controllers
 
         public ActionResult Add()
         {
-            ViewBag.ListOutlet = new SelectList(OutletDAL.GetData(), "ID", "OutletName");
+            var UserId = User.Identity.GetUserId();
+            ViewBag.ListOutlet = new SelectList(EmployeeOutletDAL.GetDataByID(int.Parse(UserId)), "ID", "OutletName");
             ViewBag.ListSupplier = new SelectList(SuppliersDAL.GetData(), "ID", "Name");
             return PartialView("Add");
         }
 
         public ActionResult OrderDetail()
         {
-            return PartialView("OrderDetail");
+            return PartialView( "OrderDetail");
         }
     }
 }

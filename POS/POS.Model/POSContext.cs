@@ -41,6 +41,8 @@ namespace POS.Model
         public DbSet<Role> TRole { get; set; }
         public DbSet<Suppliers> TSuppliers { get; set; }
 
+        public DbSet<User> TUser { get; set; }
+
         
     }
 

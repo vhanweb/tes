@@ -48,6 +48,7 @@
     <Compile Include="CategoriesDAL.cs" />
     <Compile Include="DistrictDAL.cs" />
     <Compile Include="EmployeeDAL.cs" />
+    <Compile Include="EmployeeOutletDAL.cs" />
     <Compile Include="ItemIventoryDAL.cs" />
     <Compile Include="OutletDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

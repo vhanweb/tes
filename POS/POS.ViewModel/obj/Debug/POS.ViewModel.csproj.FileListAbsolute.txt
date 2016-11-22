@@ -7,3 +7,12 @@ E:\Project POS\pos-clone\POS\POS.ViewModel\bin\Debug\EntityFramework.xml
 E:\Project POS\pos-clone\POS\POS.ViewModel\obj\Debug\POS.ViewModel.csprojResolveAssemblyReference.cache
 E:\Project POS\pos-clone\POS\POS.ViewModel\obj\Debug\POS.ViewModel.dll
 E:\Project POS\pos-clone\POS\POS.ViewModel\obj\Debug\POS.ViewModel.pdb
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\POS.ViewModel.dll
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\POS.ViewModel.pdb
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\POS.Model.dll
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\EntityFramework.dll
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\POS.Model.pdb
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\EntityFramework.xml
+E:\Documents\tes\POS\POS.ViewModel\obj\Debug\POS.ViewModel.csprojResolveAssemblyReference.cache
+E:\Documents\tes\POS\POS.ViewModel\obj\Debug\POS.ViewModel.dll
+E:\Documents\tes\POS\POS.ViewModel\obj\Debug\POS.ViewModel.pdb

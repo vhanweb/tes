@@ -18,6 +18,9 @@ namespace POS.ViewModel
         [Display(Name = "Outlet ID")]
         public Nullable<int> OutletID { get; set; }
 
+        [Display(Name = "Outlet Name")]
+        public string OutletName { get; set; }
+
         [Display(Name = "Role ID")]
         public Nullable<int> RoleID { get; set; }
 
