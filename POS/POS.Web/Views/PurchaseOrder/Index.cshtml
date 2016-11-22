@@ -133,6 +133,7 @@
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {
+            alert('tes');
             $('#order').val('0');
             $('#unit-cost').val('0');
             //pop up add purchase order(tombol create po)
@@ -199,37 +200,63 @@
                     '<tr>' +
                         '<td><input type="hidden" name="ID" value="' + vID + '"/>' + vNamaVariant + '</td>' +
                         '<td>' + vstok + '</td>' +
-                        '<td><input type="text" class="orderc form-control " style="width:60px;" id="order_' + vID + '"/></td>' +
-                        '<td><input type="text" class="unit-cost form-control" style="width:100px;" id ="unitcost_' + vID + '"/></td>' +
-                        '<td><input type="text" class="totalc form-control" style="width:100px;" id="total_' + vID + '" readonly="readonly"/></td>' +
+                        '<td><input type="text" class="orderc form-control read" style="width:60px;" id="order_' + vID + '"/></td>' +
+                        '<td><input type="text" class="unit-cost form-control read" style="width:100px;" id ="unitcost_' + vID + '"/></td>' +
+                        '<td><input type="text" class="totalc form-control read" style="width:100px;" id="total_' + vID + '" readonly="readonly"/></td>' +
                         '<td><button type="button" class="btn btn-danger btn-xs btn-del-item"><i class="fa fa-trash-o" ></i></button></td>' +
                     '</tr>';
 
                 $("#list-detail-item").append(vData);
                 $("#search-item-modal").modal('hide');
             });
-            
+
             $('#modal-podetail-data').on('change', '.unit-cost', function (e) {
                 e.preventDefault();
                 var order = $(this).parent().parent().find(".orderc").val();
                 var unitcost = $(this).parent().parent().find('.unit-cost').val();
                 var total = parseInt(order) * parseInt(unitcost);
+                var atotal = 0;
                 $(this).parent().parent().find('.totalc').val(total);
-               
+
+                var atotal = 0;
+                alert(atotal);
+                $.each($('#list-detail-item').find('.totalc'), function (i, v) {
+                    var vTotal = $(this).text();
+                    atotal = parseInt(vTotal) + atotal;
+                    alert('total' + atotal);
+                });
+                
             });
 
-            
-            //mendelete data yang sudah ditambahkan
+
+            //mendelete data yang sudah ditambahkan di modal po detail
             $("#modal-podetail-data").on("click", ".btn-del-item", function (e) {
                 e.preventDefault();
                 $(this).parent().parent().remove();
             });
 
+            //mendelete data yang sudah ditambahkan di modal po create
+            $("#modal-purchaseorder-data").on("click", ".btn-del-item", function (e) {
+                e.preventDefault();
+                $(this).parent().parent().remove();
+            });
+            //add data ke modal po
             $('#modal-podetail-data').on('click', '.btn-save', function (e) {
                 e.preventDefault();
+
                 var aData = $('#list-detail-item').contents();
                 $('#list-detail-po').append(aData);
             });
+
+            $('#modal-purchaseorder-data').on('change', '#list-detail-po', function (e) {
+                e.preventDefault();
+                alert('tes');
+                var subtotal = $(this).find(".totalc").val();
+                var total = parseInt(subtotal);
+                $(this).parent().parent().parent().parent().find('#SubTotal').val(total);
+
+            });
+
         });
     </script>
 }
