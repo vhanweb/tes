@@ -1,0 +1,35 @@
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\POS.Model.dll
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\POS.Model.pdb
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\EntityFramework.dll
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.dll
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\EntityFramework.xml
+E:\Project POS\pos-clone\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.xml
+E:\Project POS\pos-clone\POS\POS.Model\obj\Debug\POS.Model.dll
+E:\Project POS\pos-clone\POS\POS.Model\obj\Debug\POS.Model.pdb
+E:\Project POS\pos-clone\POS\POS.Model\obj\Debug\POS.Model.csprojResolveAssemblyReference.cache
+E:\Documents\tes\POS\POS.Model\bin\Debug\POS.Model.dll
+E:\Documents\tes\POS\POS.Model\bin\Debug\POS.Model.pdb
+E:\Documents\tes\POS\POS.Model\bin\Debug\EntityFramework.dll
+E:\Documents\tes\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.dll
+E:\Documents\tes\POS\POS.Model\bin\Debug\EntityFramework.xml
+E:\Documents\tes\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.xml
+E:\Documents\tes\POS\POS.Model\obj\Debug\POS.Model.csprojResolveAssemblyReference.cache
+E:\Documents\tes\POS\POS.Model\obj\Debug\POS.Model.dll
+E:\Documents\tes\POS\POS.Model\obj\Debug\POS.Model.pdb
+D:\bismillah\Punya Yofan\POS\POS.Model\bin\Debug\POS.Model.dll
+D:\bismillah\Punya Yofan\POS\POS.Model\bin\Debug\POS.Model.pdb
+D:\bismillah\Punya Yofan\POS\POS.Model\bin\Debug\EntityFramework.dll
+D:\bismillah\Punya Yofan\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.dll
+D:\bismillah\Punya Yofan\POS\POS.Model\bin\Debug\EntityFramework.xml
+D:\bismillah\Punya Yofan\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.xml
+D:\bismillah\Punya Yofan\POS\POS.Model\obj\Debug\POS.Model.dll
+D:\bismillah\Punya Yofan\POS\POS.Model\obj\Debug\POS.Model.pdb
+D:\bismillah\Punya Yofan\POS\POS.Model\obj\Debug\POS.Model.csprojResolveAssemblyReference.cache
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.Model\bin\Debug\POS.Model.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.Model\bin\Debug\POS.Model.pdb
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.Model\bin\Debug\EntityFramework.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.Model\bin\Debug\EntityFramework.xml
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.xml
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.Model\obj\Debug\POS.Model.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.Model\obj\Debug\POS.Model.pdb

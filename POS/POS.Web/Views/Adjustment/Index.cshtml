@@ -1,0 +1,189 @@
+﻿@model IEnumerable<POS.ViewModel.AdjustmentViewModel>
+
+<div class="row">
+    <div class="col-md-2">
+        <h3>List Adjustment</h3>
+    </div>
+    <div class="col-md-10"></div>
+</div>
+
+<form class="form-inline pull-right">
+    <div class="form-group">
+        <button class="btn btn-primary">Import/Export</button>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" id="btn-create-adjustment">Create Adjustment</button>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.VariantName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Adjusment)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.VariantName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adjusment)
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@*modal pertama*@
+<div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 id="form-model-tittle" class="modal-title text-center"></h4>
+            </div>
+            <div class="modal-body" id="form-modal-data">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal kedua*@
+<div id="search-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 id="search-model-tittle" class="modal-title text-center"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <div id="alert-message" style="display:none;" class="alert alert-warning alert-dismissible">
+                        <h5><i class="icon fa fa-warning"></i> Warning!</h5>
+                        <p id="text-message"></p>
+                    </div>
+                    <input type="hidden" id="search-type" value="variant" />
+                    <input type="text" id="search-txt" class="form-control" placeholder="Search Key" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" id="btn-src-modal"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+                <div class="row">
+                    <div id="search-data" class="col-md-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //script tombol create adjustment
+            $("#btn-create-adjustment").click(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '@Url.Action("Add","Adjustment")',
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#form-modal-data").html(result);
+                        $("#form-modal").modal('show');
+                    },
+                });
+            });
+
+            //script add item di modal pertama
+            $('#form-modal').on('click', "#btn-add-adj", function (e) {
+                e.preventDefault();
+                $("#search-model-tittle").html("Add Item Variant")
+                $("#search-type").val("variant")
+                $.ajax({
+                    url: '@Url.Action("GetItemVariant", "AJAX")',
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#search-data").html(result);
+                        $("#search-modal").modal('show');
+                    },
+                });
+            });
+
+            //utk mengklik item yang dipilih
+            $("#search-data").on("click", ".btn-ok-add", function (e) {
+                e.preventDefault();
+                var vID = $(this).attr("data-id")
+                var vSKU = $(this).attr("data-sku")
+                var vName = $(this).attr("data-nama")
+                var vInstock = $(this).attr("data-instock")
+                var vActual = $(this).parent().parent().find(".item-actual").val();
+                var vData = '<tr>' +
+                    '<td class="text-center"><input type="hidden" name="VariantID" value="' + vID + '"/>' + vSKU + '</td> ' +
+                    '<td class="text-center">' + vName + '</td>' +
+                    '<td class="text-center">' + vInstock + '</td>' +
+                    '<td class="text-center"><input type="text" id="jumlah-transfer" value="' + vActual + '" class="form-control"/></td>' +
+                    '<td class="text-center"><button type="button" class="btn btn-danger btn-xs btn-del-items"><i class="fa fa-trash-o" ></i></button></td>' +
+                '</tr>';
+                $("#list-detail-adj").append(vData);
+                $("#search-modal").modal('hide');
+            });
+
+            //untuk menghapus satu baris dari list bila salah
+            $("#list-detail-adj").on("click", ".btn-del-items", function (e) {
+                e.preventDefault();
+                $(this).parent().parent().remove();
+            });
+
+            //tombol search item
+            $("#btn-src-modal").click(function () {
+                var type = $("#search-type").val();
+                var txtSearch = $("#search-txt").val();
+
+                $.ajax({
+                    url: '@Url.Action("GetVariantSearch","AJAX")',
+                    data: { searchKey: txtSearch },
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#search-data").html(result);
+                    },
+                });
+            });
+        });
+    </script>
+}
+

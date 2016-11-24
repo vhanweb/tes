@@ -1,0 +1,40 @@
+﻿@model IEnumerable<POS.ViewModel.CustomersViewModel>
+
+@{
+    ViewBag.Title = "_ListCustomers";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        
+        <td>
+            <button type="button" class="btn btn-warning btn-xs btn-ok-customers" data-id="@item.ID" data-cn="@item.CustomerName" data-ph="@item.Phone" data-em="@item.Email"><i class="fa fa-check"></i></button>
+        </td>
+    </tr>
+}
+
+</table>

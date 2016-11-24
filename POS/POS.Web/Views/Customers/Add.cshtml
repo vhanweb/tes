@@ -1,0 +1,122 @@
+﻿@model POS.ViewModel.CustomersViewModel
+
+@{
+    ViewBag.Title = "Add";
+}
+
+@using (Html.BeginForm("Add", "Customers", null, FormMethod.Post, new { @id = "form-customers" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+
+            <div class="col-md-12">
+                <h5>PROFIL</h5>
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name" } })
+                @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email (Required)" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Phone" } })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <h5>BIRTHDAY</h5>
+            </div>
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Day" } })
+                @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.BirthMonth, new { htmlAttributes = new { @class = "form-control", @placeholder = "Month" } })
+                @Html.ValidationMessageFor(model => model.BirthMonth, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.BirthYear, new { htmlAttributes = new { @class = "form-control", @placeholder = "Year" } })
+                @Html.ValidationMessageFor(model => model.BirthYear, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <h5>ADDRESS(OPTIONAL)</h5>
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Address" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.ProvinceID, (IEnumerable<SelectListItem>)ViewBag.listProvince, "= Chose Provinci =", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ProvinceID, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.RegionID, (IEnumerable<SelectListItem>)ViewBag.listRegion, "= Chose Region =", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RegionID, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.DistrictID, (IEnumerable<SelectListItem>)ViewBag.listDistrict, "= Chose District =", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DistrictID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="btn-cus-save" class="btn btn-primary btn-block">Simpan</button>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $("#ProvinceID").change(function () {
+            var vId = $(this).val();
+            $.ajax({
+                url: "@Url.Action("GetRegion", "AJAX")",
+                data: { provinceId: vId },
+                dataType: 'json',
+                type: 'GET',
+                success: function (result) {
+                    $("#DistrictID").empty();
+                    $("#DistrictID").append('<option value="">= chose Region =</option>');
+                    $("#RegionID").empty();
+                    $("#RegionID").append('<option value="">= chose Region =</option>');
+                    $.each(result, function (index, item) {
+                        $("#RegionID").append('<option value="' + item.ID + '">' + item.RegionName + '</option>');
+                    });
+                },
+            });
+        });
+
+
+        $("#RegionID").change(function () {
+            var vId = $(this).val();
+            $.ajax({
+                url: "@Url.Action("GetDistrict", "AJAX")",
+                data: { regionId: vId },
+                dataType: 'json',
+                type: 'GET',
+                success: function (result) {
+                    $("#DistrictID").empty();
+                    $("#DistrictID").append('<option value="">= chose Region =</option>');
+                    $.each(result, function (index, item) {
+                        $("#DistrictID").append('<option value="' + item.ID + '">' + item.DistrictName + '</option>');
+                    });
+                },
+            });
+        });
+        $("#btn-cus-save").click(function () {
+            $("#form-customers").submit();
+            $("#customer-dtl-modal").modal('hide');
+        });
+    });
+</script>

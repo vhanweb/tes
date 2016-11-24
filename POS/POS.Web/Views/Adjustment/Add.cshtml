@@ -1,0 +1,77 @@
+﻿@model POS.ViewModel.AdjustmentViewModel
+
+<h2>Create Adjustment</h2>
+
+@using (Html.BeginForm("Add", "Adjusment", null, FormMethod.Post, new { @id = "form-adjusment" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.OutletName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.OutletName, (IEnumerable<SelectListItem>)ViewBag.Transfer ,new { @class = "form-control", @disabled = "" })
+                @Html.ValidationMessageFor(model => model.OutletID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Note, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Note,new { @class = "form-control col-md-10"  })
+                @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="box" style="margin-left:-10px; margin-right:-20px;">
+            <div class="box-header">
+                <h4 class="box-title">Adjusment Stock</h4>
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width:150px">
+                        <div class="input-group-btn col-md-offset-8 col-md-1">
+                            <button id="btn-add-adj" class="btn btn-primary" type="button">
+                                Add Item
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-stripped table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center">SKU</th>
+                            <th class="text-center">Variant Name</th>
+                            <th class="text-center">In Stock</th>
+                            <th class="text-center">Actual Stock</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="list-detail-adj"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-10 col-md-2">
+                <button class="btn btn-primary" type="submit">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            
+        });
+    </script>
+}
+

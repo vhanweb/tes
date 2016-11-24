@@ -1,0 +1,422 @@
+﻿@model POS.ViewModel.PaymentDetailViewModel
+@using (Html.BeginForm("Add", "Payment",null,FormMethod.Post, new{ @id="form-payment"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="hidden" id="search-type" value="ProductItem" />
+                <input type="text" id="search-txt" class="form-control" placeholder="Search Key" /><span class="input-group-btn">
+                    <button id="search-btn" class="btn btn-primary" type="button" name="search">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+
+            <div class="box">
+                <div id="items" class="box-body">
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tbody id="list-detail-item"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" id="btn-new-cus" class="btn btn-block btn-social btn-primary btn-lg" style="text-align:center">
+                        <i class="ion ion-person"></i>
+                        New Customer
+                    </button>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-body">
+                    <table class="table table-striped table-bordered table table-condensed">
+
+                        <tbody id="list-detail-item-cus"></tbody>
+                    </table>
+
+                    <div class="col-md-9 pull-left">
+                        <label>Total</label>
+                    </div>
+                    <div class="col-md-3 pull-right-container" id="total">
+                        <input name="GrandTotal" type="text" id="total-belanja" class="form-control col-md-6" readonly="readonly" />
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <input name="CustomerID" type="hidden" id="id-customer" class="form-control col-md-6" readonly="readonly" />
+                        <input name="CustomerName" type="hidden" id="nama-customer" class="form-control col-md-6" readonly="readonly" />
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="hidden" id="kembalian" class="form-control col-md-6" readonly="readonly" />
+                    </div>
+
+                    <button type="button" id="clear-sale" class="btn btn-primary bg-white btn-block">
+                        Clear Sale
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+                Charge Rp. <label id="total-harga"></label>
+            </button>
+        </div>
+    </div>
+}
+
+
+
+@*================================================   MODAL KANAN CUSTOMER  ================================================*@
+
+<div id="customer-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="col-md-8">
+                        <h4 id="search-model-title" class="modal-title" style="text-align:center">Customer</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" id="done" class="btn btn-primary">Done</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="alert-message" style="display:none;" class="alert alert-warning alert-dismissible">
+                    <h5><i class="icon fa fa-warning"></i> Warning!</h5>
+                    <p id="text-message"></p>
+                </div>
+                <div class="input-group">
+                    <input type="hidden" id="search-type" value="ProductItem" />
+                    <input type="text" id="search-txt-cus" class="form-control" placeholder="Search Key" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" id="btn-src-modal-cus"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+                <br />
+                <div>
+                    <button id="btn-new-cus-model" class="btn btn-primary btn-block" type="button">New Customers</button>
+                </div>
+                <div class="row">
+                    <div id="search-data" class="col-md-12">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*//============================= CUSTOMERS NEW ================================*@
+
+@*MODAL NEW CUSTOMER KEDUA*@
+
+<div id="customer-dtl-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div id="customer-dtl-modal-data" class="modal-body">
+                <div class="row">
+                    <div id="add-new-cus" class="col-md-12">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*//============================= PAYMNT OPTION ================================*@
+
+
+<div id="payment-option" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-4">
+                    <label>Cash</label>
+                </div>
+                <div class="col-md-4">
+                    <button id="uang-pas" type="button" class="btn btn-default btn-block" value="">
+                        Rp. <label id="total-harga2"></label>
+                    </button>
+                </div>
+                <div class="col-md-4">
+                    <button id="uang-kembalian" type="button" class="btn btn-primary btn-block" value="">
+                        <label>Rp. 100.000</label>
+                    </button>
+                </div>
+                <div class="col-lg-12">
+                    <br />
+                </div>
+                <div class="col-md-8 pull-right">
+                    <button type="submit" class="btn btn-default btn-block" value="">
+                        Charge Rp. <label id="total-harga2"></label>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*//============================= MODAL BUTTON SUBMIT ================================*@
+
+
+<div id="button-submit" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-4">
+                    <label>Cash</label>
+                </div>
+                <div class="col-md-4">
+                    <button id="uang-pas" type="button" class="btn btn-default btn-block" value="">
+                        Rp. <label id="total-harga2"></label>
+                    </button>
+                </div>
+                <div class="col-md-4">
+                    <button id="uang-kembalian" type="button" class="btn btn-primary btn-block" value="">
+                        <label>Rp. 100.000</label>
+                    </button>
+                </div>
+                <div class="col-lg-12">
+                    <br />
+                </div>
+                <div class="col-md-8 pull-right">
+                    <button type="submit" class="btn btn-default btn-block" value="">
+                        Charge Rp. <label id="total-harga2"></label>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/plugins/datepicker")
+
+    <script type="text/javascript">
+        function LoadTableItems() {
+            $.ajax({
+                url: '@Url.Action("GetItems", "AJAX")',
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+                    $("#items").html(result);
+                },
+            });
+        }; 
+
+
+        $(document).ready(function () {
+            LoadTableItems();
+            $("#total-belanja").val(0);
+            $("#total-harga2").val(0);
+            $("#kembalian").val(0);
+            $("#sub-total").val(0);
+            $("#id-customer").val(1);
+
+
+            var nC = "New Customer";
+            $("#nama-customer").val(nC);
+
+            //===================    K     I     R     I    =================================
+
+            //===================TOMBOL SEARCH PADA MODAL PRODUCT ITEM=================================
+
+            $('#search-btn').click(function () {
+                var txtSearch = $('#search-txt').val();
+                $.ajax({
+                    url: '@Url.Action("GetItemsSearch", "AJAX")',
+                    data: { searchKey: txtSearch },
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#items").html(result);
+                    },
+                });
+            });
+
+            //============== TOMBOL CLEAR SALE ==================================================
+            $("#clear-sale").click(function () {
+                $("#list-detail-item-cus").empty();
+                $("#total-belanja").val(0);
+                $("#total-harga").html(0);
+                $("#total-harga2").val(0);
+                $("#id-customer").val(1);
+                $("#nama-customer").val(nC);
+
+            });
+
+            //===================TOMBOL CHECKLIST PADA MODAL PRODUCT ITEM=================================
+
+
+            $("#items").on("click", ".btn-ok-items", function (e) {
+                e.preventDefault();
+
+                var vID = $(this).attr("data-id");
+                var vIDVar = $(this).attr("data-idVariant");
+                var vNama = $(this).attr("data-nm");
+                var vVarName = $(this).attr("data-vn");
+                var vPrice = $(this).attr("data-pr");
+
+
+                var itemQty = $("#list-detail-item-cus").find("#variantID_" + vIDVar).val(vIDVar).length;
+                var quantity = 1;
+
+                if (itemQty > 0) {
+                    quantity = $("#list-detail-item-cus").find("#quantity_q" + vIDVar).val();
+                    quantity = parseInt(quantity) + 1;
+                }
+
+                var SubTotal = parseInt(quantity) * parseInt(vPrice);
+                
+                if (quantity == 1) {
+                        var vData = '<tr>' +
+                            '<td><input type="hidden" id="itemID_' + vID + '" class="itemId" name="ID" value="' + vID + '"/>' + vNama + '</td>' +
+                            '<td class="variantname"> <input type="hidden" id="variantID_' + vIDVar + '" class="variantItem" name="VariantID" value="' + vIDVar + '"/>' + vVarName + '</td>' +
+                            '<td id="unitprice_' + vIDVar + '" class="harga"> <input type="hidden" class="form-control" id="unitprice_' + vIDVar + '"  name="UnitPrice" value="' + vPrice + '"/>' + vPrice + '</td>' +
+                            '<td id="quantity_' + vIDVar + '" class="quantity"> <input id="quantity_q' + vIDVar + '" type="hidden" class="form-control" name="Quantity" value="' + quantity + '"/><label id="quantity_qty' + vIDVar + '"></label></td>' +
+                            '<td id="subtotal_' + vIDVar + '" class="subtotal"> <input id="subtotal_s' + vIDVar + '" type="hidden" class="form-control" name="SubTotal" value="' + SubTotal + '"/><label id="subtotal_sbt' + vIDVar + '"></label></td>' +
+                            '<td><button type="button" class="btn btn-danger btn-xs btn-to-bil"><i class="fa fa-trash" ></i></button></td>' +
+                        '</tr>';
+
+                        $("#list-detail-item-cus").append(vData);
+                        $("#list-detail-item-cus").find("#quantity_qty" + vIDVar).html(quantity);
+                        $("#list-detail-item-cus").find("#subtotal_sbt" + vIDVar).html(SubTotal);
+                    }
+                    else {
+
+                        $("#list-detail-item-cus").find("#quantity_q" + vIDVar).val(quantity);
+                        $("#list-detail-item-cus").find("#subtotal_s" + vIDVar).val(SubTotal);
+
+
+                        $("#list-detail-item-cus").find("#quantity_qty" + vIDVar).html(quantity);
+                        $("#list-detail-item-cus").find("#subtotal_sbt" + vIDVar).html(SubTotal);
+
+                    }
+
+                    // ================ MENGHITUNG TOTAL =================================
+                    var Total = 0;
+                    $.each($("#list-detail-item-cus").find(".subtotal"), function (i, v) {
+                        var vTotal = $(this).text();
+                        Total = parseInt(vTotal) + Total;
+                    });
+
+                    $("#total-belanja").val(Total);
+                    $("#total-harga").html(Total);
+                    $("#total-harga2").html(Total);
+            });
+
+            // ================= button delete ===========================
+
+            $("#list-detail-item-cus").on("click", ".btn-to-bil", function (e) {
+
+                alert(" Mau hapus ???");
+
+                $(this).parent().parent().remove();
+
+                var Total = 0;
+                $.each($("#list-detail-item-cus").find(".subtotal"), function (i, v) {
+                    var vTotal = $(this).text();
+                    Total = parseInt(vTotal) + Total;
+                });
+                $("#total-belanja").val(Total);
+                $("#total-harga").html(Total);
+                $("#total-harga2").html(Total);
+                
+            });
+
+            //===================    K     A    N      A     N    =================================
+
+            //===================TOMBOL NEW CUSTOMER INDEX=================================
+
+            $("#btn-new-cus").click(function () {
+                $.ajax({
+                    url: '@Url.Action("GetCustomers", "AJAX")',
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#search-data").html(result);
+                        $("#customer-modal").modal('show');
+                    },
+                });
+            });
+
+            $('#done').click(function () {
+                $("#payment-option").modal('show');
+            });
+
+            //===================TOMBOL Search MODAL=================================
+
+            $('#btn-src-modal-cus').click(function () {
+                var txtSearch = $('#search-txt-cus').val();
+                $.ajax({
+                    url: '@Url.Action("GetCustomersSearch", "AJAX")',
+                    data: { searchKey: txtSearch },
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#search-data").html(result);
+                    },
+                });
+            });
+
+            $("#btn-new-cus-model").click(function () {
+                $.ajax({
+                    url: '@Url.Action("Add", "Customers")',
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#add-new-cus").html(result);
+                        $("#customer-dtl-modal").modal('show');
+                    },
+                });
+            });
+
+
+            //================== KLIK LIST CUSTOMER ===================
+
+            $("#search-data").on("click", ".btn-ok-customers", function (e) {
+                var vID = $(this).attr("data-id");
+                var vNama = $(this).attr("data-cn");
+                var vPhone = $(this).attr("data-ph");
+                $("#id-customer").val(vID);
+                $("#nama-customer").val(vNama);
+            });
+
+
+            //=================== KLIK TOMBOL NOMINAL PEMBAYARAN // KEMBALIAN =========================
+
+            $('#uang-kembalian').click(function () {
+                var Nominal = 100000;
+                var nilaitotalbelanja = $("#total").find("#total-belanja").val();
+                var kembalian = Nominal - nilaitotalbelanja;
+
+                $("#kembalian").val(kembalian);
+                $("#payment-option").modal('hide');
+                $("#customer-modal").modal('hide');
+            });
+
+            $('#uang-pas').click(function () {
+                var kembalian = 0;
+
+                $("#kembalian").val(kembalian);
+                $("#payment-option").modal('hide');
+                $("#customer-modal").modal('hide');
+            });
+
+        });
+    </script>
+}

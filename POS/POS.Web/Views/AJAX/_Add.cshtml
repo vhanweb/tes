@@ -1,0 +1,43 @@
+﻿@model IEnumerable<POS.ViewModel.AdjustmentViewModel>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SKU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VariantName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InStock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActualStock)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SKU)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VariantName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InStock)
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => item.ActualStock, new { @class="form-control item-actual"})
+            </td>
+            <td>
+                <button type="button" class="btn btn-warning btn-xs btn-ok-add" data-id="@item.VariantID" data-sku="@item.SKU" data-nama="@item.VariantName" data-instock="@item.InStock" data-actual="@item.ActualStock">
+                <i class="fa fa-check"></i></button>
+
+            </td>
+        </tr>
+    }
+
+</table>

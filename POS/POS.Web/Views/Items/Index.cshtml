@@ -1,0 +1,220 @@
+﻿@model IEnumerable<POS.ViewModel.ListItemViewModel>
+
+<div id="modal-item" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div id="modal-item-data" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-item-variant" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Add New Varian</h3>
+            </div>
+            <div id="modal-item-variant-data" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-item-inventory" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div id="modal-item-inventory-data" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="list-item" class="box box-info">
+    <div class="box-header">
+        <div class="form-inline">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-10">
+                        @Html.DropDownList("CategoryID", (IEnumerable<SelectListItem>)ViewBag.listCategories, "All Categories", new { @class = "form-control" })
+                        @Html.DropDownList("ItemsIventoryID", (IEnumerable<SelectListItem>)ViewBag.listInventory, "All Inventories", new { @class = "form-control" })
+
+                        <button id="btn-add-item" class="btn btn-primary" type="button">Create Item</button>
+                        <button id="btn-expimp" type="button" class="btn btn-primary">Import/Export </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="list-item-data" class="box-body">
+
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+    function loadData() {
+        $.ajax({
+            url: '@Url.Action("Load","Items")',
+            dataType: 'html',
+            type: 'GET',
+            success: function (result) {
+                $("#list-item-data").html(result);
+            },
+        });
+    }
+
+    $(document).ready(function () {
+        loadData();
+        //====================== MODAL BTN-ADD-ITEMS =============================
+        $("#btn-add-item").click(function () {
+            $.ajax({
+                url: '@Url.Action("Add","Items")',
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#modal-item-data").html(result);
+                        $("#modal-item").modal('show');
+                    },
+                });
+            });
+
+            $("#btn-expimp").click(function () {
+                alert("Export/ Import");
+            });
+
+            //===button Edit di List Item
+            $("#list-item-data").on("click", ".btn-edit", function () {
+                var vId = $(this).attr("data-id");
+                alert("Tes Edit" + vId);
+                $.ajax({
+                    url: '@Url.Action("Edit","Items")',
+                    data : {Id:vId},
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#modal-item-data").html(result);
+                        $("#modal-item").modal('show');
+                    },
+                });
+                
+            });
+
+            //====================== MODAL BTN-ADD-VARIANT =============================
+            $("#modal-item").on('click', '#btn-add-variant', function () {
+                //alert("Tes Add");
+                $.ajax({
+                    url: '@Url.Action("AddVariant", "Items")',
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+                    $("#modal-item-variant-data").html(result);
+                    $("#modal-item-variant").modal('show');
+                }
+            });
+            });
+
+        //====================== MODAL BTN-EDIT-VARIANT =============================
+        @*$("#modal-item").on('click', '#btn-edit-variant', function () {
+            alert("Tes Edit Variant");
+            $.ajax({
+                url: '@Url.Action("EditVariant","Items")',
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+                    alert("Tes Edit Variant Under Success");
+                    $("#modal-item-data").html(result);
+                    $("#modal-item").modal('show');
+                }
+            });
+        });*@
+
+
+        //====================== MODAL BTN-TRACKINVENTORY =============================
+
+        $("#modal-item").on('click', '#btn-mng-inventory', function () {
+            var varName = $("#modal-item-data").find("#variantName_").val();
+            var index = $("#modal-item-inventory-data").find("#list-item-inventory >tr").length;
+            var indexItem = parseInt(index) - 1;
+            var dataItemInventory =
+            '<tr>' +
+                '<td><input type="text" class="form-control" placeholder="Variant Name" readonly="readonly" id="VariantName_"' + indexItem + ' name="VariantNameList" value="' + varName + '"></td>' +
+                '<td><input type="text" class="form-control"placeholder="In Stock" id="inStock_" name="VariantInStock_" value=""></td>' +
+                '<td><input type="text" class="form-control"placeholder="Alert At" id="alertAt_" name="VariantAlertAt_" value=""></td>' +
+            '</tr>';
+            alert(indexItem);
+            $.ajax({
+                url: '@Url.Action("MngInventory","Items")',
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+
+                    $("#modal-item-inventory-data").html(result);
+                    $("#modal-item-inventory").modal('show');
+                    $("#modal-item-inventory-data").find("#list-item-inventory").append(dataItemInventory);
+                }
+            });
+        });
+
+        //======tombol save di Add Variant
+        $("#modal-item-variant-data").on("submit", "#form-item", function (e) {
+            //cari di modal-item-variant-data attribut dengan id
+            var varName = $("#modal-item-variant-data").find("#VariantName").val();
+            var varSKU = $("#modal-item-variant-data").find("#SKU").val();
+            var varPrice = $("#modal-item-variant-data").find("#Price").val();
+            var index = $("#modal-item-data").find("#list-item-variant >tr").length;
+            alert(index);
+            var indexItem = parseInt(index) - 1;
+            var dataItemVariant =
+                '<tr>' +
+                    '<td><input type="text" class="form-control" readonly="readonly" id="variantName_"' + indexItem + ' name="VariantNameList" value="' + varName + '"></td>' +
+                    '<td><input type="text" class="form-control" readonly="readonly" id="variantSKU_"' + indexItem + ' name="VariantSKU" value="' + varSKU + '"></td>' +
+                    '<td><input type="text" class="form-control" readonly="readonly" id="variantPrice_"' + indexItem + ' name="VariantPrice" value="' + varPrice + '"></td>' +
+                '</tr>';
+
+            var dataItemInventory =
+                '<tr>' +
+                    '<td><input type="text" class="form-control" readonly="readonly" id="InvName_"' + indexItem + ' name="InventoryName" value="' + varName + '"/></td>' +
+                    '<td><input type="text" class="form-control" id="InvinStock_"' + indexItem + ' name="Beginning" value=""/></td>' +
+                    '<td><input type="text" class="form-control" id="InvAlertAt_"' + indexItem + ' name="AlertAt" value=""/></td>' +
+                '</tr>';
+
+            $("#modal-item-data").find("#list-item-variant").append(dataItemVariant);//buat menampilkan variabel dataItemVariant di model-item-data dengan mencari di table list-item-variant
+            $("#modal-item-data").find("#list-item-inventory").append(dataItemInventory);
+            $("#modal-item-variant").modal('hide');
+            return false;
+        });
+
+        //=======tombol save di MngInventory
+        $("#modal-item-inventory-data").on("click", "#form-item", function (e) {
+            var varName = $("#modal-item-inventory-data").find("#VariantName_").val();
+            var varinStock = $("#modal-item-inventory-data").find("#inStock_").val();
+            var varalertAt = $("#modal-item-inventory-data").find("#alertAt_").val();
+            var index = $("#modal-item-data").find("#list-item-inventory >tr").length;
+            var dataItemInventory =
+                '<tr>' +
+                    '<td><input type="text" class="form-control" placeholder="Variant Name" readonly="readonly" id="variantName_"' + indexItem + ' name="VariantNameList" value="' + varName + '"></td>' +
+                    '<td><input type="text" class="form-control" placeholder="In Stock" readonly="readonly" id="inventoryStock_"' + indexItem + ' name="InventoryStock" value="' + varinStock + '"></td>' +
+                '</tr>';
+            $("#modal-item-data").find("#list-item-inventory").append(dataItemInventory);
+            $("#modal-item-inventory").modal('hide');
+            return false;
+        });
+
+
+
+
+
+    });
+
+    </script>
+}
+
+

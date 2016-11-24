@@ -1,0 +1,36 @@
+E:\Project POS\pos-clone\POS\POS.ViewModel\bin\Debug\POS.ViewModel.dll
+E:\Project POS\pos-clone\POS\POS.ViewModel\bin\Debug\POS.ViewModel.pdb
+E:\Project POS\pos-clone\POS\POS.ViewModel\bin\Debug\POS.Model.dll
+E:\Project POS\pos-clone\POS\POS.ViewModel\bin\Debug\EntityFramework.dll
+E:\Project POS\pos-clone\POS\POS.ViewModel\bin\Debug\POS.Model.pdb
+E:\Project POS\pos-clone\POS\POS.ViewModel\bin\Debug\EntityFramework.xml
+E:\Project POS\pos-clone\POS\POS.ViewModel\obj\Debug\POS.ViewModel.csprojResolveAssemblyReference.cache
+E:\Project POS\pos-clone\POS\POS.ViewModel\obj\Debug\POS.ViewModel.dll
+E:\Project POS\pos-clone\POS\POS.ViewModel\obj\Debug\POS.ViewModel.pdb
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\POS.ViewModel.dll
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\POS.ViewModel.pdb
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\POS.Model.dll
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\EntityFramework.dll
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\POS.Model.pdb
+E:\Documents\tes\POS\POS.ViewModel\bin\Debug\EntityFramework.xml
+E:\Documents\tes\POS\POS.ViewModel\obj\Debug\POS.ViewModel.csprojResolveAssemblyReference.cache
+E:\Documents\tes\POS\POS.ViewModel\obj\Debug\POS.ViewModel.dll
+E:\Documents\tes\POS\POS.ViewModel\obj\Debug\POS.ViewModel.pdb
+D:\bismillah\Punya Yofan\POS\POS.ViewModel\bin\Debug\POS.ViewModel.dll
+D:\bismillah\Punya Yofan\POS\POS.ViewModel\bin\Debug\POS.ViewModel.pdb
+D:\bismillah\Punya Yofan\POS\POS.ViewModel\bin\Debug\POS.Model.dll
+D:\bismillah\Punya Yofan\POS\POS.ViewModel\bin\Debug\EntityFramework.dll
+D:\bismillah\Punya Yofan\POS\POS.ViewModel\bin\Debug\POS.Model.pdb
+D:\bismillah\Punya Yofan\POS\POS.ViewModel\bin\Debug\EntityFramework.xml
+D:\bismillah\Punya Yofan\POS\POS.ViewModel\obj\Debug\POS.ViewModel.csprojResolveAssemblyReference.cache
+D:\bismillah\Punya Yofan\POS\POS.ViewModel\obj\Debug\POS.ViewModel.dll
+D:\bismillah\Punya Yofan\POS\POS.ViewModel\obj\Debug\POS.ViewModel.pdb
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.ViewModel\bin\Debug\POS.ViewModel.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.ViewModel\bin\Debug\POS.ViewModel.pdb
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.ViewModel\bin\Debug\POS.Model.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.ViewModel\bin\Debug\EntityFramework.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.ViewModel\bin\Debug\POS.Model.pdb
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.ViewModel\bin\Debug\EntityFramework.xml
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.ViewModel\obj\Debug\POS.ViewModel.csprojResolveAssemblyReference.cache
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.ViewModel\obj\Debug\POS.ViewModel.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.ViewModel\obj\Debug\POS.ViewModel.pdb

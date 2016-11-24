@@ -1,0 +1,43 @@
+﻿@model IEnumerable<POS.ViewModel.TransferViewModel>
+
+<table class="table">
+    <tr>
+        
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.SKU)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.VariantName)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.InStock)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.SKU)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.VariantName)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.InStock)
+            </td>
+            <td class="text-center">
+                @Html.TextBoxFor(modelItem => item.Transfer, new { @class = "form-control item-transfer" })
+            </td>
+            <td class="col-md-1">
+                <button type="button" class="btn btn-warning btn-xs btn-ok-transfer" data-id="@item.VariantID" data-sku="@item.SKU" data-nama="@item.VariantName" data-instock="@item.InStock" data-transfer="@item.Transfer"><i class="fa fa-check"></i></button>
+            </td>
+        </tr>
+    }
+
+</table>

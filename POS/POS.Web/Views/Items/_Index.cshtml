@@ -1,0 +1,33 @@
+﻿@model IEnumerable<POS.ViewModel.ListItemViewModel>
+
+
+    <table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>Action</th>
+        
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                <button type="button" class="btn btn-success btn-edit" data-id="@item.ID"><i class="fa fa-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" data-id="@item.ID"><i class="fa fa-trash"></i></button>
+            </td>
+            
+        </tr>
+    }
+</table>

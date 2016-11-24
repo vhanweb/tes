@@ -1,0 +1,25 @@
+﻿@model IEnumerable<POS.ViewModel.ItemsViewModel>
+
+@{
+    ViewBag.Title = "_ListItems";
+}
+
+<table class="table">
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VariantName)
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            <button type="button" class="btn btn-warning btn-xs btn-ok-items" data-idVariant="@item.VariantID" data-id="@item.ID" data-nm="@item.Name" data-vn="@item.VariantName" data-pr="@item.Price"><i class="fa fa-check"></i></button>
+        </td>
+    </tr>
+}
+
+</table>

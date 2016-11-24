@@ -1,0 +1,52 @@
+E:\Project POS\pos-clone\POS\POS.DAL\bin\Debug\POS.DAL.dll
+E:\Project POS\pos-clone\POS\POS.DAL\bin\Debug\POS.DAL.pdb
+E:\Project POS\pos-clone\POS\POS.DAL\bin\Debug\EntityFramework.dll
+E:\Project POS\pos-clone\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.dll
+E:\Project POS\pos-clone\POS\POS.DAL\bin\Debug\POS.Model.dll
+E:\Project POS\pos-clone\POS\POS.DAL\bin\Debug\POS.ViewModel.dll
+E:\Project POS\pos-clone\POS\POS.DAL\bin\Debug\POS.Model.pdb
+E:\Project POS\pos-clone\POS\POS.DAL\bin\Debug\POS.ViewModel.pdb
+E:\Project POS\pos-clone\POS\POS.DAL\bin\Debug\EntityFramework.xml
+E:\Project POS\pos-clone\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\Project POS\pos-clone\POS\POS.DAL\obj\Debug\POS.DAL.csprojResolveAssemblyReference.cache
+E:\Project POS\pos-clone\POS\POS.DAL\obj\Debug\POS.DAL.dll
+E:\Project POS\pos-clone\POS\POS.DAL\obj\Debug\POS.DAL.pdb
+E:\Documents\tes\POS\POS.DAL\obj\Debug\POS.DAL.csprojResolveAssemblyReference.cache
+E:\Documents\tes\POS\POS.DAL\obj\Debug\POS.DAL.dll
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.DAL.dll
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.DAL.pdb
+E:\Documents\tes\POS\POS.DAL\bin\Debug\EntityFramework.dll
+E:\Documents\tes\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.dll
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.Model.dll
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.ViewModel.dll
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.Model.pdb
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.ViewModel.pdb
+E:\Documents\tes\POS\POS.DAL\bin\Debug\EntityFramework.xml
+E:\Documents\tes\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\Documents\tes\POS\POS.DAL\obj\Debug\POS.DAL.pdb
+D:\bismillah\Punya Yofan\POS\POS.DAL\bin\Debug\POS.DAL.dll
+D:\bismillah\Punya Yofan\POS\POS.DAL\bin\Debug\POS.DAL.pdb
+D:\bismillah\Punya Yofan\POS\POS.DAL\bin\Debug\EntityFramework.dll
+D:\bismillah\Punya Yofan\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\bismillah\Punya Yofan\POS\POS.DAL\bin\Debug\POS.Model.dll
+D:\bismillah\Punya Yofan\POS\POS.DAL\bin\Debug\POS.ViewModel.dll
+D:\bismillah\Punya Yofan\POS\POS.DAL\bin\Debug\POS.Model.pdb
+D:\bismillah\Punya Yofan\POS\POS.DAL\bin\Debug\POS.ViewModel.pdb
+D:\bismillah\Punya Yofan\POS\POS.DAL\bin\Debug\EntityFramework.xml
+D:\bismillah\Punya Yofan\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\bismillah\Punya Yofan\POS\POS.DAL\obj\Debug\POS.DAL.csprojResolveAssemblyReference.cache
+D:\bismillah\Punya Yofan\POS\POS.DAL\obj\Debug\POS.DAL.dll
+D:\bismillah\Punya Yofan\POS\POS.DAL\obj\Debug\POS.DAL.pdb
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\bin\Debug\POS.DAL.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\bin\Debug\POS.DAL.pdb
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\bin\Debug\EntityFramework.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\bin\Debug\POS.Model.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\bin\Debug\POS.ViewModel.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\bin\Debug\POS.Model.pdb
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\bin\Debug\POS.ViewModel.pdb
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\bin\Debug\EntityFramework.xml
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\obj\Debug\POS.DAL.csprojResolveAssemblyReference.cache
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\obj\Debug\POS.DAL.dll
+E:\Bootcamp 95\POS Gabung\Ade Sulistiawan\POS Ade\POS\POS.DAL\obj\Debug\POS.DAL.pdb
