@@ -23,7 +23,7 @@ namespace POS.DAL
                           join opd in context.TPurchaseOrderDetail on op.ID equals opd.HeaderID
                           select new PurchaseOrderViewModel()
                           {
-                              ID = oph.ID,
+                              ID = op.ID,
                               StatusID = oph.StatusID,
                               SupplierID = op.SupplierID,
                               StatusName = ops.StatusName,

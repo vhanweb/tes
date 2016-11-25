@@ -69,7 +69,7 @@
                         </td>
 
                         <td>
-                            <button type="button" class="btn btn-warning btn-xs btn-edit" data-id="@item.ID"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button type="button" class="btn btn-warning btn-xs btn-detail" data-id="@item.ID"><i class="glyphicon glyphicon-edit"></i></button>
                         </td>
                     </tr>
                 }
@@ -143,13 +143,23 @@
             $('#unit-cost').val('0');
 
             $('#modal-purchaseorder-data').on('click', '.click-edit', function () {
+                var vID = $(this).attr('data-id');
+                $.ajax({
+                    url: '@Url.Action("Edit","PurchaseOrder")',
+                    data: { Id: vID },
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#modal-podetail').modal('show');
+                    }
+                });
                 $('#modal-podetail').modal('show');
             });
 
-            $('.btn-edit').click(function () {
+            $('.btn-detail').click(function () {
                 var vId = $(this).attr('data-id');
                 $.ajax({
-                    url: '@Url.Action("Edit","PurchaseOrder")',
+                    url: '@Url.Action("Detail", "PurchaseOrder")',
                     data : {Id : vId},
                     dataType: 'html',
                     type: 'GET',

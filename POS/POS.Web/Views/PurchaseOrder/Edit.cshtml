@@ -1,118 +1,54 @@
-﻿@model POS.ViewModel.ListPurchaseOrderViewModel
+﻿@model POS.ViewModel.PurchaseOrderDetailsViewModel
 
+<h4 class="text-center">Add Purchase Order</h4>
+<hr />
 
-@using (Html.BeginForm("Edit", "PurchaseOrder", null, FormMethod.Post, new { @id = "form-addpurchaseorder" }))
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.ID)
-    <input type="text" id="ID" name="ID"/>
-    <div class="box">
+    <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="box-header">
-            <div class="form-group">
-                <div class="col-md-6">
-                    <button type="button" class="btn btn-default">Resend</button>
+
+        <div class="form-group">
+            @Html.Label("Item", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12">
+                <div class="input-group">
+                    @Html.HiddenFor(model => model.VariantID, new { @class = "form-control" })
+                    <input type="text" id="NamaItem" class="form-control" />
+                    <div class="input-group-btn">
+                        <button type="button" id="btn-src-item" class="btn btn-flat btn-primary">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="input-group-btn col-md-2 col-md-offset-4">
-                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">
-                        More
-                        <span class="fa fa-caret-down"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <button type="button" class="btn form-control">Mark As FullField</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn form-control">Cancel Order</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn form-control">Print</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn form-control click-edit" data-id="ID">Edit</button>
-                        </li>
-                    </ul>
-                </div>
+
+                @Html.ValidationMessageFor(model => model.VariantID, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="box box-body">
-            <div class="form-group" id="purchase-order">
-                @*purchase order*@
-                <p>Purchase Order Detail</p>
-                <hr />
-
-                @Html.DisplayFor(m => m.Supplier.Name)
-
-                <table class="table table-bordered">
+        
+            <table class="table table-bordered table-hover">
+                <thead>
                     <tr>
-                        <td> @Html.DisplayFor(m => m.Supplier.Phone)</td>
-                        <td colspan="2">@Html.DisplayFor(m => m.Supplier.Email)</td>
-
+                        <th>Item</th>
+                        <th>In Stok</th>
+                        <th>Order</th>
+                        <th>Unit Cost</th>
+                        <th>Total</th>
+                        <th></th>
                     </tr>
-                    <tr>
-                        <td colspan="3"> @Html.DisplayFor(m => m.Supplier.Address)</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(m => m.Supplier.RegionName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => m.Supplier.ProvinceName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => m.Supplier.PostalCode)
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="form-group" id="note">
-                <p>Note : </p>
-                <hr />
-                @Html.DisplayFor(m => m.Notes)
-                <hr />
-
-                <p>PO : @Html.DisplayFor(m => m.OrderNo)</p>
-                <p>Created At : @Html.DisplayFor(m => m.CreatedOn)</p>
-                <p>Created By : @Html.DisplayFor(m => m.PurchaseOrder.fullname)</p>
-                <p>Email : @Html.DisplayFor(m => m.PurchaseOrder.email)</p>
-                <p>Outlet Name : @Html.DisplayFor(m => m.Outlet.OutletName)</p>
-                <p>Address : @Html.DisplayFor(m => m.Outlet.FullAddress) </p>
-
-
-            </div>
-            <div class="form-group" id="detail-po">
-
-                <table class="table">
-                    <tbody>
-                        @foreach (var item in Model.PurchaseOrderDetail)
-                        {
-                            <tr>
-                                <td>@Html.DisplayFor(m => item.VarianName)</td>
-                                <td>@Html.DisplayFor(m => item.InStok)</td>
-                                <td>@Html.DisplayFor(m => item.Quantity)</td>
-                                <td>@Html.DisplayFor(m => item.UnitCost)</td>
-                                <td>@Html.DisplayFor(m => item.SubTotal)</td>
-                            </tr>                        
-                        }
-                    </tbody>
-                </table>
-
-            </div>
+                </thead>
+                <tbody id="list-detail-item"></tbody>
+            </table>
+    
+    <div class="modal-footer">
+        <div class="col-md-2 pull-right">
+            <button type="button" class="btn btn-primary  btn-save col-md-12" data-dismiss="modal">Add</button>
         </div>
-
-
-
-        <div class="modal-footer">
-            <div class="col-md-2 pull-right">
-                <button type="submit" class="btn btn-primary btn-block">Save</button>
-            </div>
-            <div class="col-md-2 pull-right">
-                <button type="button" class="btn btn-default btn-outline btn-block" data-dismiss="modal">Cancel</button>
-            </div>
+        <div class="col-md-2 pull-left">
+            <button type="button" class="btn btn-default col-md-12" data-dismiss="modal">Cancel</button>
         </div>
     </div>
+    </div>
 }
-
-
-
 

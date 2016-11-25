@@ -595,7 +595,7 @@
     <Content Include="Views\Summary\Index.cshtml" />
     <Content Include="Views\Transfer\Index.cshtml" />
     <Content Include="Views\PurchaseOrder\Add.cshtml" />
-    <Content Include="Views\PurchaseOrder\Edit.cshtml" />
+    <Content Include="Views\PurchaseOrder\Detail.cshtml" />
     <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\PurchaseOrder\OrderDetail.cshtml" />
   </ItemGroup>

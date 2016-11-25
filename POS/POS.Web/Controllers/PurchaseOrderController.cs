@@ -108,10 +108,10 @@ namespace POS.Web.Controllers
             return PartialView("OrderDetail");
         }
 
-        public ActionResult Edit(int Id)
+        public ActionResult Detail(int Id)
         {
             ListPurchaseOrderViewModel model = PurchaseOrderDAL.GetDataByIdPO(Id);
-            return PartialView("Edit", model);
+            return PartialView("Detail", model);
         }
     }
 }

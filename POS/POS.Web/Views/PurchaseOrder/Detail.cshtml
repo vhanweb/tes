@@ -1,0 +1,118 @@
+﻿@model POS.ViewModel.ListPurchaseOrderViewModel
+
+
+@using (Html.BeginForm("Detail", "PurchaseOrder", null, FormMethod.Post, new { @id = "form-addpurchaseorder" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ID)
+    <input type="text" id="ID" name="ID"/>
+    <div class="box">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="box-header">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-default">Resend</button>
+                </div>
+                <div class="input-group-btn col-md-2 col-md-offset-4">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">
+                        More
+                        <span class="fa fa-caret-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button type="button" class="btn form-control">Mark As FullField</button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn form-control">Cancel Order</button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn form-control">Print</button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn form-control click-edit" data-id="@Html.DisplayFor(m => m.ID)">Edit</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="box box-body">
+            <div class="form-group" id="purchase-order">
+                @*purchase order*@
+                <p>Purchase Order Detail</p>
+                <hr />
+
+                @Html.DisplayFor(m => m.Supplier.Name)
+
+                <table class="table table-bordered">
+                    <tr>
+                        <td> @Html.DisplayFor(m => m.Supplier.Phone)</td>
+                        <td colspan="2">@Html.DisplayFor(m => m.Supplier.Email)</td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="3"> @Html.DisplayFor(m => m.Supplier.Address)</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => m.Supplier.RegionName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => m.Supplier.ProvinceName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => m.Supplier.PostalCode)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group" id="note">
+                <p>Note : </p>
+                <hr />
+                @Html.DisplayFor(m => m.Notes)
+                <hr />
+
+                <p>PO : @Html.DisplayFor(m => m.OrderNo)</p>
+                <p>Created At : @Html.DisplayFor(m => m.CreatedOn)</p>
+                <p>Created By : @Html.DisplayFor(m => m.PurchaseOrder.fullname)</p>
+                <p>Email : @Html.DisplayFor(m => m.PurchaseOrder.email)</p>
+                <p>Outlet Name : @Html.DisplayFor(m => m.Outlet.OutletName)</p>
+                <p>Address : @Html.DisplayFor(m => m.Outlet.FullAddress) </p>
+
+
+            </div>
+            <div class="form-group" id="detail-po">
+
+                <table class="table">
+                    <tbody>
+                        @foreach (var item in Model.PurchaseOrderDetail)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(m => item.VarianName)</td>
+                                <td>@Html.DisplayFor(m => item.InStok)</td>
+                                <td>@Html.DisplayFor(m => item.Quantity)</td>
+                                <td>@Html.DisplayFor(m => item.UnitCost)</td>
+                                <td>@Html.DisplayFor(m => item.SubTotal)</td>
+                            </tr>                        
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+
+        <div class="modal-footer">
+            <div class="col-md-2 pull-right">
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
+            </div>
+            <div class="col-md-2 pull-right">
+                <button type="button" class="btn btn-default btn-outline btn-block" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
