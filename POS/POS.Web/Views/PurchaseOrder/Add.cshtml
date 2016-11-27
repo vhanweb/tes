@@ -14,7 +14,7 @@
                 <div class="col-md-12">
                     <h4>Outlet</h4>
                     <hr />
-                    @Html.DropDownListFor(model => model.OutletID, (IEnumerable<SelectListItem>)ViewBag.ListOutlet, new { @class = "form-control"})
+                    @Html.DropDownListFor(model => model.OutletID, (IEnumerable<SelectListItem>)ViewBag.ListOutlet, new { @class = "form-control", @type = "hidden" })
                     @Html.ValidationMessageFor(model => model.OutletID, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -53,15 +53,16 @@
                     </thead>
                     <tbody id="list-detail-po"></tbody>
                 </table>
-                <button type="button" id="btn-total" class="btn btn-danger">Total</button>
+               
                 <div class="form-group">
                     <div class="col-md-12">
                         @Html.Label("TOTAL", new { @class = "label-control pull-left col-md-10" })
                         <div class="col-md-2">
-                            <input id="total-3" name="Total" type="text" class="form-control"/>
+                            <button type="button" id="btn-total" class="btn btn-success btn-sm">Total</button>
+                            <input id="total-3" name="Total" type="hidden" class="form-control" />
+                            <p id="total-2"></p>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -78,7 +79,7 @@
                 <button type="submit" class="btn btn-primary btn-block">Save</button>
             </div>
             <div class="col-md-2 pull-right">
-                <button type="button" class="btn btn-default btn-outline btn-block" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Cancel</button>
             </div>
         </div>
         
@@ -97,7 +98,17 @@
                 total = parseInt(subtotal) + total;
             });
             $('#total-3').val(total);
+            $('#total-2').text(total);
         });
+
+        $('#list-detail-po').on('change', '.unit-cost', function (e) {
+            e.preventDefault();
+            var order = $(this).parent().parent().find(".orderc").val();
+            var unitcost = $(this).parent().parent().find('.unit-cost').val();
+            var subtotal = parseInt(order) * parseInt(unitcost);
+            $(this).parent().parent().find('.totalc').val(subtotal);
+        });
+
     });
 
 

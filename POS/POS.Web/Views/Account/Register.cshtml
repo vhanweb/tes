@@ -1,9 +1,4 @@
 ﻿@model POS.Web.Models.RegisterViewModel
-@{
-    ViewBag.Title = "Register";
-}
-
-<h2>@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -175,6 +170,3 @@
     });
     </script>
 }
-@*@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}*@

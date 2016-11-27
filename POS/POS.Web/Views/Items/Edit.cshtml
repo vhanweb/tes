@@ -1,107 +1,267 @@
 ﻿@model IEnumerable<POS.ViewModel.ListItemViewModel>
 
-@using (Html.BeginForm("Edit", "Items", null, FormMethod.Post, new { @id = "form-item" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.ID)
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Items Name" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-
-                @Html.DropDownList("CategoryId", (IEnumerable<SelectListItem>)ViewBag.listCategories, new { @class="form-control"})
-                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+<div id="modal-item" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-        </div>
-
-        <h5>Variant</h5><hr />
-        <div class="box">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>SKU</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="list-item-variant">
-                    @{
-                        int i = 0;
-                    }
-                    @foreach (var item in Model.ListVariant)
-                    {
-                        <tr>
-                            <td>
-                            <input type="hidden" id="VariantId_ @i.ToString()" name="VariantId" value="@Html.DisplayFor(m=>item.ID)">
-                            <input type="text" class="form-control" id="variantName_ @i.ToString()" name="VariantName" value="@Html.DisplayFor(m=>item.VariantName)"></td>
-                            <td><input type="text" class="form-control" id="variantSKU_ @i.ToString()" name="VariantSKU" value="@Html.DisplayFor(m=>item.SKU)"></td>
-                            <td><input type="text" class="form-control" id="variantPrice_ @i.ToString()" name="VariantPrice" value="@Html.DisplayFor(m=>item.Price)"></td>
-                        </tr>
-                        i++;
-                    }
-                </tbody>
-            </table>
-        </div>
-
-        @*<div class="form-group">
-                <div class="col-md-12">
-                    <button id="btn-edit-variant" class="btn btn-block btn-primary" type="button">Manage Variant</button>
-                </div>
-            </div>*@
-
-        <h5>Inventory</h5><hr />
-        <div class="box">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>In Stock</th>
-                        <th>Alert At</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="list-item-inventory">
-                    @{
-                        int j = 0;
-                    }
-                    @foreach (var item in Model.ListInventory)
-                    {
-                        <tr>
-                            <td><input type="hidden" id="InventoryId_@j.ToString()" name="InventoryId">
-                            <input type="text" class="form-control" readonly="readonly" id="InvName_ @j.ToString()"  name="InventoryName" value="@Html.DisplayFor(m=>item.VariantName)" /></td>
-                            <td><input type="text" class="form-control" id="InvinStock_ @j.ToString()"  name="Beginning" value="@Html.DisplayFor(m=>item.Beginning)" /></td>
-                            <td><input type="text" class="form-control" id="InvAlertAt_ @j.ToString()"  name="AlertAt" value="@Html.DisplayFor(m=>item.AlertAt)" /></td>
-                        </tr>
-                        j++;
-                    }
-                </tbody>
-            </table>
-        </div>
-
-        @*<div class="form-group">
-                <div class="col-md-12">
-                    <button id="btn-edit-inventory" class="btn btn-block btn-primary" type="submit">Manage Item Inventory and Alerts</button>
-                </div>
-            </div>*@
-
-
-        <h5>Description</h5><hr />
-        <div class="form-group">
-            <div class="col-md-12">
-                <textarea rows="3" cols="83"></textarea>
-            </div>
-        </div>
-
-        <div class="modal-footer">
-            <div class="col-md-12">
-                <button class="btn btn-primary pull-right" type="submit">Save</button>
-                <button class="btn btn-default pull-left" type="button" data-dismiss="modal">Cancel</button>
+            <div id="modal-item-data" class="modal-body">
             </div>
         </div>
     </div>
+</div>
+
+<div id="modal-item-variant" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Add New Varian</h3>
+            </div>
+            <div id="modal-item-variant-data" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-item-inventory" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div id="modal-item-inventory-data" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="list-item" class="box box-info">
+    <div class="box-header">
+        <div class="form-inline">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-10">
+                        @Html.DropDownList("CategoryID", (IEnumerable<SelectListItem>)ViewBag.listCategories, "All Categories", new { @class = "form-control" })
+                        @Html.DropDownList("ItemsIventoryID", (IEnumerable<SelectListItem>)ViewBag.listInventory, "All Inventories", new { @class = "form-control" })
+
+                        <button id="btn-add-item" class="btn btn-primary" type="button">Create Item</button>
+                        <button id="btn-expimp" type="button" class="btn btn-primary">Import/Export </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="list-item-data" class="box-body">
+
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+    function loadData() {
+        $.ajax({
+            url: '@Url.Action("Load","Items")',
+            dataType: 'html',
+            type: 'GET',
+            success: function (result) {
+                $("#list-item-data").html(result);
+            },
+        });
+    }
+
+    $(document).ready(function () {
+        loadData();
+        //====================== MODAL BTN-ADD-ITEMS =============================
+        $("#btn-add-item").click(function () {
+            $.ajax({
+                url: '@Url.Action("Add","Items")',
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#modal-item-data").html(result);
+                        $("#modal-item").modal('show');
+                    },
+                });
+            });
+
+            $("#btn-expimp").click(function () {
+                alert("Export/ Import");
+            });
+
+            //===button Edit di List Item
+            $("#list-item-data").on("click", ".btn-edit", function () {
+                var vId = $(this).attr("data-id");
+                alert("Tes Edit" + vId);
+                $.ajax({
+                    url: '@Url.Action("Edit","Items")',
+                    data : {Id:vId},
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#modal-item-data").html(result);
+                        $("#modal-item").modal('show');
+                    },
+                });
+
+            });
+
+        //filter Category
+        $("#CategoryID").change(function () {
+            var Id = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetCategories", "Items")',
+                data: { categoryID: Id },
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+                    $("#list-item-data").html(result);
+                },
+            });
+        });
+
+        //===button Edit di List Item
+            $("#list-item-data").on("click", ".btn-edit", function () {
+                var vId = $(this).attr("data-id");
+                alert("Tes Edit" + vId);
+                $.ajax({
+                    url: '@Url.Action("Edit","Items")',
+                    data : {Id:vId},
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#modal-item-data").html(result);
+                        $("#modal-item").modal('show');
+                    },
+                });
+
+            });
+
+            //===button delete di List Item
+            $("#list-item-data").on("click", ".btn-delete", function () {
+                var vId = $(this).attr("data-id");
+                alert("Tes delete" + vId);
+                $.ajax({
+                    url: '@Url.Action("Delete","Items")',
+                    data: { Id: vId },
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#modal-item-data").html(result);
+                        $("#modal-item").modal('show');
+                    },
+                });
+            });
+
+            //====================== MODAL BTN-ADD-VARIANT =============================
+            $("#modal-item").on('click', '#btn-add-variant', function () {
+                //alert("Tes Add");
+                $.ajax({
+                    url: '@Url.Action("AddVariant", "Items")',
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+                    $("#modal-item-variant-data").html(result);
+                    $("#modal-item-variant").modal('show');
+                }
+            });
+            });
+
+        //====================== MODAL BTN-EDIT-VARIANT =============================
+        @*$("#modal-item").on('click', '#btn-edit-variant', function () {
+            alert("Tes Edit Variant");
+            $.ajax({
+                url: '@Url.Action("EditVariant","Items")',
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+                    alert("Tes Edit Variant Under Success");
+                    $("#modal-item-data").html(result);
+                    $("#modal-item").modal('show');
+                }
+            });
+        });*@
+
+
+        //====================== MODAL BTN-TRACKINVENTORY =============================
+
+        $("#modal-item").on('click', '#btn-mng-inventory', function () {
+            var varName = $("#modal-item-data").find("#variantName_").val();
+            var index = $("#modal-item-inventory-data").find("#list-item-inventory >tr").length;
+            var indexItem = parseInt(index) - 1;
+            var dataItemInventory =
+            '<tr>' +
+                '<td><input type="text" class="form-control" placeholder="Variant Name" readonly="readonly" id="VariantName_"' + indexItem + ' name="VariantName" value="' + varName + '"></td>' +
+                '<td><input type="text" class="form-control"placeholder="In Stock" id="inStock_" name="VariantInStock_" value=""></td>' +
+                '<td><input type="text" class="form-control"placeholder="Alert At" id="alertAt_" name="VariantAlertAt_" value=""></td>' +
+            '</tr>';
+            alert(indexItem);
+            $.ajax({
+                url: '@Url.Action("MngInventory","Items")',
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+
+                    $("#modal-item-inventory-data").html(result);
+                    $("#modal-item-inventory").modal('show');
+                    $("#modal-item-inventory-data").find("#list-item-inventory").append(dataItemInventory);
+                }
+            });
+        });
+
+        //======tombol save di Add Variant
+        $("#modal-item-variant-data").on("submit", "#form-item", function (e) {
+            //cari di modal-item-variant-data attribut dengan id
+            var varName = $("#modal-item-variant-data").find("#VariantName").val();
+            var varSKU = $("#modal-item-variant-data").find("#SKU").val();
+            var varPrice = $("#modal-item-variant-data").find("#Price").val();
+            var index = $("#modal-item-data").find("#list-item-variant >tr").length;
+            alert(index);
+            var indexItem = parseInt(index) - 1;
+            var dataItemVariant =
+                '<tr>' +
+                    '<td><input type="text" class="form-control" readonly="readonly" id="variantName_"' + indexItem + ' name="VariantName" value="' + varName + '"></td>' +
+                    '<td><input type="text" class="form-control" readonly="readonly" id="variantSKU_"' + indexItem + ' name="VariantSKU" value="' + varSKU + '"></td>' +
+                    '<td><input type="text" class="form-control" readonly="readonly" id="variantPrice_"' + indexItem + ' name="VariantPrice" value="' + varPrice + '"></td>' +
+                '</tr>';
+
+            var dataItemInventory =
+                '<tr>' +
+                    '<td><input type="text" class="form-control" readonly="readonly" id="InvName_"' + indexItem + ' name="InventoryName" value="' + varName + '"/></td>' +
+                    '<td><input type="text" class="form-control" id="InvinStock_"' + indexItem + ' name="Beginning" value=""/></td>' +
+                    '<td><input type="text" class="form-control" id="InvAlertAt_"' + indexItem + ' name="AlertAt" value=""/></td>' +
+                '</tr>';
+
+            $("#modal-item-data").find("#list-item-variant").append(dataItemVariant);//buat menampilkan variabel dataItemVariant di model-item-data dengan mencari di table list-item-variant
+            $("#modal-item-data").find("#list-item-inventory").append(dataItemInventory);
+            $("#modal-item-variant").modal('hide');
+            return false;
+        });
+
+        //=======tombol save di MngInventory
+        $("#modal-item-inventory-data").on("click", "#form-item", function (e) {
+            var varName = $("#modal-item-inventory-data").find("#VariantName_").val();
+            var varinStock = $("#modal-item-inventory-data").find("#inStock_").val();
+            var varalertAt = $("#modal-item-inventory-data").find("#alertAt_").val();
+            var index = $("#modal-item-data").find("#list-item-inventory >tr").length;
+            var dataItemInventory =
+                '<tr>' +
+                    '<td><input type="text" class="form-control" placeholder="Variant Name" readonly="readonly" id="variantName_"' + indexItem + ' name="VariantName" value="' + varName + '"></td>' +
+                    '<td><input type="text" class="form-control" placeholder="In Stock" readonly="readonly" id="inventoryStock_"' + indexItem + ' name="InventoryStock" value="' + varinStock + '"></td>' +
+                '</tr>';
+            $("#modal-item-data").find("#list-item-inventory").append(dataItemInventory);
+            $("#modal-item-inventory").modal('hide');
+            return false;
+        });
+
+
+
+
+
+    });
+
+    </script>
 }
+
+

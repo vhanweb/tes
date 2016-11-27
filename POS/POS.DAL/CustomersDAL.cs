@@ -16,9 +16,6 @@ namespace POS.DAL
             using (POSContext context = new POSContext())
             {
                 result = (from x in context.TCustomers
-                          join p in context.TProvince on x.ProvinceID equals p.ID
-                          join r in context.TRegion on x.RegionID equals r.ID
-                          join d in context.TDistrict on x.DistrictID equals d.ID
                           select new CustomersViewModel()
                           {
                               ID = x.ID,
@@ -26,13 +23,9 @@ namespace POS.DAL
                               Phone = x.Phone,
                               Email = x.Email,
                               ProvinceID = x.ProvinceID,
-                              ProvinceName = p.ProvinceName,
                               RegionID = x.RegionID,
-                              RegionName = r.RegionName,
                               DistrictID = x.DistrictID,
-                              DistrictName = d.DistrictName,
                               Address = x.Address,
-                              FullAddress = x.Address + d.DistrictName + r.RegionName + p.ProvinceName,
                               CreatedBy = x.CreatedBy,
                               CreatedOn = x.CreatedOn,
                               ModifiedBy = x.ModifiedBy,

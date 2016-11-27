@@ -37,19 +37,20 @@ namespace POS.Web.Controllers
                     using (var dbTransaction = context.Database.BeginTransaction())
                     {
                         int UserId = User.Identity.GetUserId<int>();
-                        Payment item = new Payment()
+                        int empID = 0;
+                        empID = (int)PaymentDAL.GetDataById(UserId).EmployeeID;
+                       Payment item = new Payment()
                         {
                             CustomerID = model.CustomerID,
-                            EmployeeID = 31,
+                            EmployeeID = empID,
                             GrandTotal = model.GrandTotal,
-                            CreatedBy = 1,
+                            CreatedBy = UserId,
                             CreatedOn = DateTime.Now,
-                            ModifiedBy = 1,
+                            ModifiedBy = UserId,
                             ModifiedOn = DateTime.Now,
                         };
                         context.TPayment.Add(item);
-                        try{context.SaveChanges();}
-                        catch (Exception){}
+                        context.SaveChanges();
                         int i = 0;
                         foreach(var detail in model.VariantID)
                         {
@@ -60,16 +61,18 @@ namespace POS.Web.Controllers
                                 Quantity = model.Quantity[i],
                                 UnitPrice = model.UnitPrice[i],
                                 SubTotal = model.SubTotal[i],
-                                CreatedBy = 1,
+                                CreatedBy = UserId,
                                 CreatedOn = DateTime.Now,
-                                ModifiedBy = 1,
+                                ModifiedBy = UserId,
                                 ModifiedOn = DateTime.Now,
                             };
                             context.TPaymentDetail.Add(vDetail);
+                            ItemsIventory item2 = context.TItemsIventory.Where(m => m.VariantID == detail).FirstOrDefault();
+                            item2.Sales = model.Quantity[i];
+
                             i++;
                         }
-                        try{ context.SaveChanges();}
-                        catch (Exception){ }
+                        context.SaveChanges();
 
                         try
                         {
@@ -89,5 +92,6 @@ namespace POS.Web.Controllers
             return View();
         }
 
+        
     }
 }

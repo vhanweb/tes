@@ -1,15 +1,13 @@
-﻿@model IEnumerable<POS.ViewModel.AdjustmentViewModel>
+﻿@model IEnumerable<POS.ViewModel.ItemIventoryViewModel>
 
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.SKU)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.VariantName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.InStock)
+            @Html.DisplayNameFor(model => model.Beginning)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ActualStock)
@@ -20,21 +18,20 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SKU)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.VariantName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InStock)
+                @Html.DisplayFor(modelItem => item.Beginning)
             </td>
             <td>
-                @Html.TextBoxFor(modelItem => item.ActualStock, new { @class="form-control item-actual"})
+                @Html.TextBoxFor(modelItem => item.ActualStock, new { @class = "form-control item-actual" })
             </td>
             <td>
-                <button type="button" class="btn btn-warning btn-xs btn-ok-add" data-id="@item.VariantID" data-sku="@item.SKU" data-nama="@item.VariantName" data-instock="@item.InStock" data-actual="@item.ActualStock">
-                <i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-warning btn-xs btn-ok-add" data-id="@item.VariantID" data-nama="@item.VariantName" data-instock="@item.Beginning" data-actual="@item.ActualStock">
+                    <i class="fa fa-check"></i>
+                </button>
 
             </td>
         </tr>

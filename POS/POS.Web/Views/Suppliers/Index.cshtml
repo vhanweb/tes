@@ -1,0 +1,223 @@
+﻿@model IEnumerable<POS.ViewModel.SuppliersViewModel>
+
+@* bikin modal terlebih dahulu *@
+<div id="modal-suppliers" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4>Add Suppliers</h4>
+            </div>
+            <div id="modal-suppliers-data" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+@* buat table dan tombol untuk search  *@
+<div class="col-md-2">
+    <div class="input-group">
+        <div class="input-group-btn">
+            <input type="text" class="form-control" id="search-text" />
+            <button type="button" id="btn-src-suppliers" class="btn btn-flat btn-primary">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+@* buat tombol untuk export *@
+<div class="col-md-1 col-md-offset-7 ">
+    <div id="btn-export">
+        <button type="button" class="btn btn-microsoft">Export</button>
+    </div>
+</div>
+
+@* buat tombol untuk create New *@
+<div class="col-md-offset-9">
+    <div id="btn-add">
+        <button type="button" class="btn btn-microsoft">Add New</button>
+    </div>
+</div>
+<div class="box" id="list-suppliers">
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        // membuat script untuk load data
+        function loadData() {
+            $.ajax({
+                url: '@Url.Action("Load","Suppliers")',
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+                    $("#list-suppliers").html(result);
+                },
+            });
+        };
+        // setelah load data, menyiapkan button add untuk menampilkan modal
+        $(document).ready(function () {
+            loadData();
+            $("#btn-add").click(function () {
+                $.ajax({
+                    url: '@Url.Action("Add","Suppliers")',
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#modal-suppliers-data").html(result);
+                        $("#modal-suppliers").modal('show');
+                    },
+                });
+
+            });
+            // membuat drop down list untuk Province yang akan ditampiilkan di modal
+            $("#modal-suppliers-data").on("change", "#ProvinceID", function (e) {
+                e.preventDefault();
+                var vId = $(this).val();
+                $.ajax({
+                    url: "@Url.Action("GetRegion", "AJAX")",
+                    data: { provinceId: vId },
+                dataType: 'json',
+                type: 'GET',
+                success: function (result) {
+                    $("#modal-suppliers-data").find("#RegionID").empty();
+                    $("#modal-suppliers-data").find("#RegionID").append('<option value="">=Region=</option>');
+
+                    $("#modal-suppliers-data").find("#DistrictID").empty();
+                    $("#modal-suppliers-data").find("#DistrictID").append('<option value="">=District=</option>');
+
+                    $.each(result, function (index, item) {
+                        $("#modal-suppliers-data").find("#RegionID").append('<option value="' + item.ID + '">' + item.RegionName + '</option>');
+                    });
+                },
+                });
+        });
+
+        $("#list-suppliers").on("click", ".btn-edit", function (e) {
+            e.preventDefault();
+            var vID = $(this).attr('data-id');
+            $.ajax({
+                url: '@Url.Action("Edit","Suppliers")',
+                dataType: 'html',
+                data: { id: vID },
+                type: 'GET',
+                success: function (result) {
+                    $("#modal-suppliers-data").html(result);
+                    $("#modal-suppliers").modal('show');
+
+                },
+            });
+        });
+
+        $("#list-suppliers").on("click", ".btn-detail", function (e) {
+            e.preventDefault();
+            var vID = $(this).attr('data-id');
+            $.ajax({
+                url: '@Url.Action("Detail","Suppliers")',
+                dataType: 'html',
+                data: { id: vID },
+                type: 'GET',
+                success: function (result) {
+                    $("#modal-suppliers-data").html(result);
+                    $("#modal-suppliers").modal('show');
+
+                },
+            });
+        });
+
+        $("#list-suppliers").on("click", ".btn-delete", function (e) {
+            e.preventDefault();
+            var vID = $(this).attr('data-id');
+            $.ajax({
+                url: '@Url.Action("Delete","Suppliers")',
+                dataType: 'html',
+                data: { id: vID },
+                type: 'GET',
+                success: function (result) {
+                    $("#modal-suppliers-data").html(result);
+                    $("#modal-suppliers").modal('show');
+                },
+            });
+        });
+
+
+        // membuat drop down list District yang akan di tampilkan di modal
+        $("#modal-suppliers-data").on("change", "#RegionID", function (e) {
+            e.preventDefault();
+            var vId = $(this).val();
+            $.ajax({
+                url: "@Url.Action("GetDistrict", "AJAX")",
+                data: { regionId: vId },
+            dataType: 'json',
+            type: 'GET',
+            success: function (result) {
+                $("#modal-suppliers-data").find("#DistrictID").empty();
+                $("#modal-suppliers-data").find("#DistrictID").append('<option value="">=District=</option>');
+                $.each(result, function (index, item) {
+                    $("#modal-suppliers-data").find("#DistrictID").append('<option value="' + item.ID + '">' + item.DistrictName + '</option>');
+                });
+            },
+            });
+        });
+
+        // membuat searching untuk suppliers
+        $('#btn-src-modal').click(function () {
+            var type = $("#search-type").val();
+            var txtSearch = $('#search-txt').val();
+            {
+                $.ajax({
+                    url: '@Url.Action("GetAnggotaSearch", "AJAX")',
+                    data: { searchKey: txtSearch },
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#search-data").html(result);
+                    },
+                });
+            };
+        });
+
+        //unstuk mengesave
+        $("#modal-suppliers-data").on("submit", "#form-suppliers", function (e) {
+            var vData = $(this).serialize();
+            var vUrl = $(this).attr("action");
+            var vMethod = $(this).attr("method");
+            $.ajax({
+                url: vUrl,
+                data: vData,
+                method: vMethod,
+                success: function (result) {
+                    if (result.success) {
+                        $("#modal-suppliers").modal('hide');
+                        loadData();
+                    } else {
+                        $("#modal-suppliers-data").html(result);
+                        alert("coba");
+                    }
+                }
+            });
+            return false;
+        });
+
+            $("#btn-src-suppliers").click(function (e) {
+                e.preventDefault();
+                var text = $("#search-text").val();
+                $.ajax({
+                    url: '@Url.Action("SearchSuppliers","AJAX")',
+                    dataType: 'html',
+                    type: 'GET',
+                    data: { searchkey: Text },
+                    success: function (result) {
+                        $("#list-suppliers").html(result);
+                    },
+                });
+            });
+            // menyiapkan button export untuk menampilkan pdf
+            $("#btn-export").click(function () {
+                alert('yap');
+            });
+        });
+        
+    </script>
+}
+

@@ -14,6 +14,7 @@ namespace POS.ViewModel
         [Display(Name = "ID")]
         public int ID { get; set; }
 
+    
         [Display(Name = "Customer Name")]
         public string CustomerName { get; set; }
 

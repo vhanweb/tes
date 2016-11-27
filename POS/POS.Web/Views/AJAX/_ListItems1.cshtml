@@ -1,0 +1,26 @@
+﻿@model IEnumerable<POS.ViewModel.ItemsViewModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="col-md-1">
+                    <input type="checkbox" class="checkbox ChooseItems" name="ItemID" value="@item.ID" />
+                </td>
+            </tr>
+        }
+    </tbody>
+
+    </table>

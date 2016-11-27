@@ -1,9 +1,5 @@
 ﻿@model POS.ViewModel.CustomersViewModel
 
-@{
-    ViewBag.Title = "Add";
-}
-
 @using (Html.BeginForm("Add", "Customers", null, FormMethod.Post, new { @id = "form-customers" }))
 {
     @Html.AntiForgeryToken()
@@ -34,18 +30,11 @@
             <div class="col-md-12">
                 <h5>BIRTHDAY</h5>
             </div>
-            <div class="col-md-4">
-                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Day" } })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.BirthDate, "{0:dd/MM/yyyy}" , new { htmlAttributes = new { @class = "form-control datepicker", @placeholder = "BirthDate" } })
                 @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
             </div>
-            <div class="col-md-4">
-                @Html.EditorFor(model => model.BirthMonth, new { htmlAttributes = new { @class = "form-control", @placeholder = "Month" } })
-                @Html.ValidationMessageFor(model => model.BirthMonth, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-4">
-                @Html.EditorFor(model => model.BirthYear, new { htmlAttributes = new { @class = "form-control", @placeholder = "Year" } })
-                @Html.ValidationMessageFor(model => model.BirthYear, "", new { @class = "text-danger" })
-            </div>
+        
         </div>
 
         <div class="form-group">
@@ -76,7 +65,10 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-
+        $(".datepicker").datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy',
+        });
 
         $("#ProvinceID").change(function () {
             var vId = $(this).val();

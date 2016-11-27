@@ -5,7 +5,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.ID)
-    <input type="text" id="ID" name="ID"/>
+
     <div class="box">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="box-header">
@@ -20,16 +20,16 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li>
-                            <button type="button" class="btn form-control">Mark As FullField</button>
+                            <button type="button" class="btn form-control btn-order" data-id="2">Mark As FullField  <i class="fa fa-check-circle"></i></button>
                         </li>
                         <li>
-                            <button type="button" class="btn form-control">Cancel Order</button>
+                            <button type="button" class="btn form-control btn-order" data-id="3"> Cancel Order   <i class="fa fa-minus-circle"></i></button>
                         </li>
                         <li>
-                            <button type="button" class="btn form-control">Print</button>
+                            <button type="button" class="btn form-control">Print   <i class="fa fa-print"></i></button>
                         </li>
                         <li>
-                            <button type="button" class="btn form-control click-edit" data-id="@Html.DisplayFor(m => m.ID)">Edit</button>
+                            <button type="button" class="btn form-control click-edit" data-id="@Html.DisplayFor(m => m.ID)">Edit     <i class="fa fa-edit"></i></button>
                         </li>
                     </ul>
                 </div>
@@ -77,22 +77,31 @@
                 <p>Email : @Html.DisplayFor(m => m.PurchaseOrder.email)</p>
                 <p>Outlet Name : @Html.DisplayFor(m => m.Outlet.OutletName)</p>
                 <p>Address : @Html.DisplayFor(m => m.Outlet.FullAddress) </p>
-
-
+                <input type="hidden" name="StatusID" id="status" value="@Html.DisplayFor(m => m.StatusID)" />
+                <input type="hidden" name="ID" id="id" value="@Html.DisplayFor(m => m.ID)" />
             </div>
             <div class="form-group" id="detail-po">
 
-                <table class="table">
+                <table class="table table-bordered">
                     <tbody>
+                        @{
+    int i = 0;
+                        }
                         @foreach (var item in Model.PurchaseOrderDetail)
                         {
                             <tr>
-                                <td>@Html.DisplayFor(m => item.VarianName)</td>
+
+                                <td>
+                                    <input name="VariantID" type="hidden" id="VariantID_@i.ToString()" value="@Html.DisplayFor(m => item.VariantID)" />
+                                    <input name="Quantity" type="hidden" id="Quantity_@i.ToString()" value="@Html.DisplayFor(m => item.Quantity)" />
+                                    @Html.DisplayFor(m => item.VarianName)
+                                </td>
                                 <td>@Html.DisplayFor(m => item.InStok)</td>
                                 <td>@Html.DisplayFor(m => item.Quantity)</td>
                                 <td>@Html.DisplayFor(m => item.UnitCost)</td>
                                 <td>@Html.DisplayFor(m => item.SubTotal)</td>
-                            </tr>                        
+                            </tr>
+                            i++;
                         }
                     </tbody>
                 </table>
@@ -113,6 +122,15 @@
     </div>
 }
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.btn-order').click(function () {
+            var data = $(this).attr('data-id');
+            $('#status').val(data);
 
+        });
+
+    });
+</script>
 
 

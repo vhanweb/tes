@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using POS.ViewModel;
 using POS.Model;
 using POS.DAL;
+using Microsoft.AspNet.Identity;
 
 namespace POS.Web.Controllers
 {
@@ -14,13 +15,19 @@ namespace POS.Web.Controllers
         // GET: AJAX
         public ActionResult GetItem()
         {
-            List<ItemIventoryViewModel> model =  ItemIventoryDAL.GetData();
+            int UserId = User.Identity.GetUserId<int>();
+            int OutletId = 0;
+            OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
+            List<ItemIventoryViewModel> model = ItemIventoryDAL.GetDataByOutletid(OutletId);
             return PartialView("_ListItem",model);
         }
 
         public ActionResult GetItemSearch(string searchKey)
         {
-            List<ItemIventoryViewModel> model = ItemIventoryDAL.GetDataBySearch(searchKey);
+            int UserId = User.Identity.GetUserId<int>();
+            int OutletId = 0;
+            OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
+            List<ItemIventoryViewModel> model = ItemIventoryDAL.GetDataByOutletSearch(searchKey, OutletId);
             return PartialView("_ListItem",model);
         }
 
@@ -49,13 +56,19 @@ namespace POS.Web.Controllers
 
         public ActionResult GetItems()
         {
-            List<ItemsViewModel> model = ItemsDAL.GetData();
+            int UserId = User.Identity.GetUserId<int>();
+            int OutletId = 0;
+            OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
+            List<ItemsViewModel> model = ItemsDAL.GetData(OutletId);
             return PartialView("_ListItems", model);
         }
 
         public ActionResult GetItemsSearch(string searchKey)
         {
-            List<ItemsViewModel> models = ItemsDAL.GetDataSearch(searchKey);
+            int UserId = User.Identity.GetUserId<int>();
+            int OutletId = 0;
+            OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
+            List<ItemsViewModel> models = ItemsDAL.GetDataSearch(searchKey, OutletId);
             return PartialView("_ListItems", models);
         }
 
@@ -87,18 +100,53 @@ namespace POS.Web.Controllers
 
         public ActionResult GetVariant()
         {
-            List<TransferViewModel> model = TransferDAL.GetData();
+            int UserId = User.Identity.GetUserId<int>();
+            int OutletId = 0;
+            OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
+            List<ItemIventoryViewModel> model = ItemIventoryDAL.GetDataByOutletid(OutletId);
             return PartialView("_Variant", model);
         }
-        public ActionResult GetVariantSearch(string SearchKey)
+        public ActionResult GetVariantSearchTransfer(string SearchKey)
         {
-            List<TransferViewModel> model = TransferDAL.GetDataSearch(SearchKey);
+            int UserId = User.Identity.GetUserId<int>();
+            int OutletId = 0;
+            OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
+            List<ItemIventoryViewModel> model = ItemIventoryDAL.GetDataByOutletSearch(SearchKey, OutletId);
             return PartialView("_Variant", model);
         }
         public ActionResult GetItemVariant()
         {
-            List<AdjustmentViewModel> model = AdjustmentDAL.GetData();
+            int UserId = User.Identity.GetUserId<int>();
+            int OutletId = 0;
+            OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
+            List<ItemIventoryViewModel> model = ItemIventoryDAL.GetDataByOutletid(OutletId);
             return PartialView("_Add", model);
+        }
+        public ActionResult GetVariantSearchAdj(string SearchKey)
+        {
+            int UserId = User.Identity.GetUserId<int>();
+            int OutletId = 0;
+            OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
+            List<ItemIventoryViewModel> model = ItemIventoryDAL.GetDataByOutletSearch(SearchKey, OutletId);
+            return PartialView("_Add", model);
+        }
+
+        public ActionResult SearchCategories(string searchkey)
+        {
+            List<CategoriesViewModel> result = CategoriesDAL.GetSearchCategories(searchkey);
+            return PartialView("_ListCategories", result);
+        }
+
+        public ActionResult SearchSuppliers(string searchkey)
+        {
+            List<SuppliersViewModel> result = SuppliersDAL.GetSearch(searchkey);
+            return PartialView("_ListSuppliers", result);
+        }
+
+        public ActionResult SearchItemsinCategories(string searchkey)
+        {
+            List<ItemsViewModel> result = CategoriesDAL.GetSearchListItem(searchkey);
+            return PartialView("_ListItems1", result);
         }
     }
 }

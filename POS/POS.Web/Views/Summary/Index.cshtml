@@ -1,84 +1,78 @@
 ﻿@model IEnumerable<POS.ViewModel.ItemIventoryViewModel>
-<div class="row">
-    <div class="col-md-2">
+
+<div class="box">
+    <div class="box-header">
         <h3>List Summary</h3>
+        <form class="form-inline">
+
+            <div class="form-group pull-right">
+                <button class="btn btn-primary">Export</button>
+            </div>
+
+
+        </form>
     </div>
-    <div class="col-md-10"></div>
+    <div class="box-body">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemVarName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Beginning)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PurchaseOrder)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sales)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Transfer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Adjusment)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ending)
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemVarName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Beginning)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PurchaseOrder)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sales)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Transfer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adjusment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ending)
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
 </div>
-
-<form class="form-inline">
-    <div class="form-group">
-        <input type="hidden" id="search-type" value="variant" />
-        <input type="text" id="search-txt" class="form-control" placeholder="Search Key" />
-        <span class="input-group-btn">
-            <button class="btn btn-primary" id="btn-src-modal"><i class="fa fa-search"></i></button>
-        </span>
-    </div>
-    <div class="form-group pull-right">
-        <button class="btn btn-primary">Export</button>
-    </div>
-
-
-</form>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemVarName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Beginning)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PurchaseOrder)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sales)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Transfer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Adjusment)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ending)
-        </th>
-
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemVarName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Beginning)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PurchaseOrder)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sales)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Transfer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Adjusment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ending)
-            </td>
-
-        </tr>
-    }
-
-</table>

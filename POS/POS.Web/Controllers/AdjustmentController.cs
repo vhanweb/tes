@@ -17,13 +17,23 @@ namespace POS.Web.Controllers
         public ActionResult Index()
         {
             List<AdjustmentViewModel> model = AdjustmentDAL.GetData();
-            return View(model);
+            return View("Index", model);
+        }
+
+        public ActionResult load()
+        {
+            int UserId = User.Identity.GetUserId<int>();
+            int OutletId = 0;
+            OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
+            List<ItemIventoryViewModel> model = ItemIventoryDAL.GetDataByOutletid(OutletId);
+            return PartialView("_ListAdj", model);
         }
 
         public ActionResult Add()
         {
             var UserId = User.Identity.GetUserId();
-            ViewBag.Transfer = new SelectList(EmployeeOutletDAL.GetDataByID(int.Parse(UserId)), "ID", "OutletName");
+
+            ViewBag.Transfer = new SelectList(EmployeeOutletDAL.GetDataByID(int.Parse(UserId)), "OutletID", "OutletName");
             AdjustmentViewModel model = new AdjustmentViewModel();
             return PartialView("Add", model);
         }
@@ -37,38 +47,54 @@ namespace POS.Web.Controllers
                 {
                     using (var dbTransaction = context.Database.BeginTransaction())
                     {
+                        int UserId = User.Identity.GetUserId<int>();
+                        int OutletId = 1;
+                        //OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
                         AdjusmentStock item = new AdjusmentStock()
                         {
                             ID = model.ID,
-                            OutletID = 1,
+                            OutletID = OutletId,
                             Note = model.Note,
-                            CreatedBy = 1,
+                            CreatedBy = UserId,
                             CreatedOn = DateTime.Now,
-                            ModifiedBy = 1,
+                            ModifiedBy = UserId,
                             ModifiedOn = DateTime.Now,
                         };
                         context.TAdjusmentStock.Add(item);
-                        try { context.SaveChanges(); }
-                        catch (Exception) { }
+                        context.SaveChanges();
 
                         int i = 0;
-                        foreach (var detail in model.VariantName)
+                        foreach (var detail in model.VariantID)
                         {
-                            AdjusmentStockDetail item2 = new AdjusmentStockDetail() 
+                            AdjusmentStockDetail item2 = new AdjusmentStockDetail()
                             {
-                                HeaderID=item.ID,
-                                ActualStock=model.ActualStock,
-                                InStock=model.InStock,
-                                CreatedBy = 1,
+                                HeaderID = item.ID,
+                                VariantID = detail,
+                                ActualStock = model.ActualStock[i],
+                                InStock = model.InStock[i],
+                                CreatedBy = UserId,
                                 CreatedOn = DateTime.Now,
-                                ModifiedBy = 1,
+                                ModifiedBy = UserId,
                                 ModifiedOn = DateTime.Now,
                             };
                             context.TAdjusmentStockDetail.Add(item2);
-                            i++;                                    //masih kurang satu tabel lagi buat save
+                            context.SaveChanges();
+
+                            ItemsIventory vInv = context.TItemsIventory.Where(t => t.VariantID == detail).FirstOrDefault();
+                            if (vInv != null)
+                            {
+                                vInv.VariantID = detail;
+                                vInv.Beginning = model.InStock[i];
+                                vInv.Adjusment = model.AdjusmentList[i];
+                                vInv.CreatedBy = UserId;
+                                vInv.CreatedOn = DateTime.Now;
+                                vInv.ModifiedBy = UserId;
+                                vInv.ModifiedOn = DateTime.Now;
+                            };
+                            context.SaveChanges();
+                            i++;                                //masih kurang satu tabel lagi buat save
                         }                                           //yaitu tabel tabel ItemsInventory di adjustment dgn rumus actual-instock
-                        try { context.SaveChanges(); }
-                        catch (Exception) { }
+
 
                         try
                         {
@@ -77,13 +103,13 @@ namespace POS.Web.Controllers
                         }
                         catch (Exception)
                         {
-                            
+
                             dbTransaction.Rollback();
                         }
                     }
                 }
             }
-            return PartialView("Add",model);
+            return PartialView("Add", model);
         }
     }
 }

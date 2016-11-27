@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<POS.ViewModel.ListItemViewModel>
 
 
-    <table class="table">
+<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -9,8 +9,11 @@
         <th>
             @Html.DisplayNameFor(model => model.CategoryName)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Beginning)
+        </th>
         <th>Action</th>
-        
+
 
     </tr>
 
@@ -24,10 +27,13 @@
                 @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Beginning)
+            </td>
+            <td>
                 <button type="button" class="btn btn-success btn-edit" data-id="@item.ID"><i class="fa fa-edit"></i></button>
                 <button type="button" class="btn btn-danger btn-delete" data-id="@item.ID"><i class="fa fa-trash"></i></button>
             </td>
-            
+
         </tr>
     }
 </table>

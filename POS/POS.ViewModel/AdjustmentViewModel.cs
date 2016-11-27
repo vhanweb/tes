@@ -34,22 +34,24 @@ namespace POS.ViewModel
         public Nullable<int> HeaderID { get; set; }
 
         [Display(Name = "VariantID")]
-        public Nullable<int> VariantID { get; set; }
+        public List<int> VariantID { get; set; }
 
         [Display(Name = "InStock")]
-        public Nullable<int> InStock { get; set; }
-
-        [Display(Name = "SKU")]
-        public string SKU { get; set; }
+        public List<int> InStock { get; set; }
 
         [Display(Name = "Adjusment")]
-        public Nullable<int> Adjusment { get; set; }
+        public List<int> Adjusment { get; set; }
 
         [Display(Name = "Outlet Name")]
         public string OutletName { get; set; }
 
         public List<string> VariantName { get; set; }
+        public List<int> AdjusmentList { get; set; }
         [Display(Name = "ActualStock")]
-        public Nullable<int> ActualStock { get; set; }
+
+        public List<int> ActualStock { get; set; }
+
+        public List<AdjustmentDetailViewModel> AdjustmentDetail { get; set; }
+
     }
 }

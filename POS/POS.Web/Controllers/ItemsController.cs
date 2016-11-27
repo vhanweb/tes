@@ -43,35 +43,18 @@ namespace POS.Web.Controllers
             return PartialView("AddVariant", model);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult AddVariant(ItemsVariantViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        using (POSContext db= new POSContext())
-        //        {
-        //            Model.ItemsVariant item = new ItemsVariant() { 
-        //                ItemID = model.ItemID,
-        //                VariantName = model.VariantName,
-        //                SKU = model.SKU,
-        //                Price = model.Price,
-        //                OutletID = 1, // ganti
-        //                ModifiedBy = 1, // ganti
-        //                ModifiedOn = DateTime.Now,
-        //                CreatedBy = 1,
-        //                CreatedOn = DateTime.Now,
-        //            };
-        //        }
-        //    }
-        //    return PartialView("AddVariant", model);
-        //}
 
         public ActionResult MngInventory()
         {
             ItemsIventoryViewModel model = new ItemsIventoryViewModel();
             return PartialView("MngInventory", model);
         }
+        public ActionResult GetCategories(int categoryID)
+        {
+            List<ItemsViewModel> model = ItemsDAL.GetDataByCategoryID(categoryID);
+            return PartialView("_Index", model);
+        }
+
         public ActionResult GetItem(int categoryID)
         {
             List<ItemsViewModel> models = ItemDAL.GetDataByCategoryID(categoryID);
@@ -88,61 +71,67 @@ namespace POS.Web.Controllers
                     using (var dbTransaction = context.Database.BeginTransaction())
                     {
                         int UserId = User.Identity.GetUserId<int>();
-                        int OutletId = 0;
-                        OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
-                        Items data = new Items()
-                        {
-                            Name = model.Name,
-                            CategoryID = model.CategoryID,
-                            Description = model.Description,
-                            CreatedBy = UserId,
-                            CreatedOn = DateTime.Now,
-                            ModifiedBy = UserId,
-                            ModifiedOn = DateTime.Now
-                        };
-                        context.TItems.Add(data);
-                        try { context.SaveChanges(); }
-                        catch (Exception) { }
+                        var ListOutlet = context.TOutlet.ToList();
                         int i = 0;
-                        foreach (var detail in model.VariantNameList)
+                        foreach (var item in ListOutlet)
                         {
-                            ItemsVariant data2 = new ItemsVariant()
+                            Items data = new Items()
                             {
-                                ItemID = data.ID,
-                                VariantName = detail,
-                                OutletID = OutletId,
-                                SKU = model.VariantSKU[i],
-                                Price = model.VariantPrice[i],
+                                Name = model.Name,
+                                CategoryID = model.CategoryID,
+                                Description = model.Description,
                                 CreatedBy = UserId,
                                 CreatedOn = DateTime.Now,
                                 ModifiedBy = UserId,
                                 ModifiedOn = DateTime.Now
                             };
-                            context.TItemsVariant.Add(data2);
+                            context.TItems.Add(data);
                             try { context.SaveChanges(); }
                             catch (Exception) { }
-
-                            ItemsIventory data3 = new ItemsIventory()
+                            i = 0;
+                            foreach (var detail in model.VariantNameList)
                             {
-                                VariantID = data2.ID,
-                                Beginning = model.Beginning[i],
-                                PurchaseOrder = 0,
-                                Sales = 0,
-                                Transfer = 0,
-                                Adjusment = 0,
-                                Ending = model.Beginning[i],
-                                AlertAt = model.AlertAt[i],
-                                CreatedBy = UserId,
-                                CreatedOn = DateTime.Now,
-                                ModifiedBy = UserId,
-                                ModifiedOn = DateTime.Now
-                            };
-                            context.TItemsIventory.Add(data3);
-                            try { context.SaveChanges(); }
-                            catch (Exception) { }
+                                ItemsVariant data2 = new ItemsVariant()
+                                {
+                                    ItemID = data.ID,
+                                    VariantName = detail,
+                                    OutletID = item.ID,
+                                    SKU = model.VariantSKU[i],
+                                    Price = model.VariantPrice[i],
+                                    CreatedBy = UserId,
+                                    CreatedOn = DateTime.Now,
+                                    ModifiedBy = UserId,
+                                    ModifiedOn = DateTime.Now
+                                };
+                                context.TItemsVariant.Add(data2);
+                                try { context.SaveChanges(); }
+                                catch (Exception) { }
 
-                            i++;
+                                ItemsIventory data3 = new ItemsIventory()
+                                {
+                                    VariantID = data2.ID,
+                                    Beginning = model.Beginning[i],
+                                    PurchaseOrder = 0,
+                                    Sales = 0,
+                                    Transfer = 0,
+                                    Adjusment = 0,
+                                    Ending = model.Beginning[i],
+                                    AlertAt = model.AlertAt[i],
+                                    CreatedBy = UserId,
+                                    CreatedOn = DateTime.Now,
+                                    ModifiedBy = UserId,
+                                    ModifiedOn = DateTime.Now
+                                };
+                                context.TItemsIventory.Add(data3);
+                                try { context.SaveChanges(); }
+                                catch (Exception) { }
+
+                                i++;
+                            }
+
                         }
+
+
 
                         try
                         {
@@ -167,7 +156,7 @@ namespace POS.Web.Controllers
             //list Inventory
             ViewBag.listInventory = new SelectList(ItemsIventoryDAL.GetData(), "ID", "VariantName");
 
-            ListItemViewModel model = ItemDAL.GetDataById(Id);
+            ListItemViewModel model = ItemsDAL.GetDataById(Id);
             return PartialView("Edit", model);
         }
 
@@ -184,6 +173,8 @@ namespace POS.Web.Controllers
                         int UserId = User.Identity.GetUserId<int>();
                         int OutletId = 0;
                         OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
+
+
                         Items data = context.TItems.Where(x => x.ID == model.ID).FirstOrDefault();
                         if (data != null)
                         {
@@ -202,7 +193,7 @@ namespace POS.Web.Controllers
                         foreach (var item in model.VariantId)
                         {
                             ItemsVariant data2 = context.TItemsVariant.Where(x => x.ID == item).FirstOrDefault();
-                            if(data2!=null)
+                            if (data2 != null)
                             {
                                 data2.VariantName = model.VariantName[i];
                                 data2.Price = model.VariantPrice[i];
@@ -214,14 +205,14 @@ namespace POS.Web.Controllers
                             };
                             try { context.SaveChanges(); }
                             catch (Exception) { }
-                           
+
                             i++;
                         }
-                         i = 0;
+                        i = 0;
                         foreach (var item in model.InventoryId)
                         {
-                             ItemsIventory data3 = context.TItemsIventory.Where(x => x.ID == item).FirstOrDefault();
-                            if(data3!=null)
+                            ItemsIventory data3 = context.TItemsIventory.Where(x => x.ID == item).FirstOrDefault();
+                            if (data3 != null)
                             {
                                 data3.Beginning = model.Beginning[i];
                                 data3.AlertAt = model.AlertAt[i];
@@ -248,6 +239,76 @@ namespace POS.Web.Controllers
                 }
             }
             return PartialView("Edit", model);
+        }
+
+        public ActionResult Delete(int Id)
+        {
+            //list Category
+            ViewBag.listCategories = new SelectList(CategoriesDAL.GetData(), "ID", "Name");
+            //list Inventory
+            ViewBag.listInventory = new SelectList(ItemsIventoryDAL.GetData(), "ID", "VariantName");
+
+            ListItemViewModel model = ItemsDAL.GetDataById(Id);
+            return PartialView("Delete", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(ListItemViewModel model)
+        {
+            using (POSContext context = new POSContext())
+            {
+                using (var dbTransaction = context.Database.BeginTransaction())
+                {
+                    int UserId = User.Identity.GetUserId<int>();
+                    int OutletId = 0;
+                    OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
+
+                    int i = 0;
+                    foreach (var item in model.InventoryId)
+                    {
+                        ItemsIventory data3 = context.TItemsIventory.Where(x => x.ID == item).FirstOrDefault();
+
+                        context.TItemsIventory.Remove(data3);
+                        try { context.SaveChanges(); }
+                        catch (Exception) { }
+                        i++;
+                    }
+
+                    i = 0;
+                    foreach (var item in model.VariantId)
+                    {
+                        ItemsVariant data2 = context.TItemsVariant.Where(x => x.ID == item).FirstOrDefault();
+
+                        context.TItemsVariant.Remove(data2);
+                        try { context.SaveChanges(); }
+                        catch (Exception) { }
+
+                        i++;
+                    }
+
+                    Items data = context.TItems.Where(x => x.ID == model.ID).FirstOrDefault();
+
+                    context.TItems.Remove(data);
+
+                    try { context.SaveChanges(); }
+                    catch (Exception) { }
+
+
+                    try
+                    {
+                        dbTransaction.Commit();
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception)
+                    {
+                        dbTransaction.Rollback();
+                    }
+
+                }
+            }
+
+            return PartialView("Delete", model);
         }
 
     }

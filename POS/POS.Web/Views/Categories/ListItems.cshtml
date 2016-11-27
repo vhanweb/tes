@@ -1,0 +1,39 @@
+﻿@model POS.ViewModel.CategoriesViewModel
+
+@using (Html.BeginForm("UpdateItems", "Categories", null, FormMethod.Post, new { @id = "form-items" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m=>m.OutletID)
+    @Html.HiddenFor(m => m.ID) //
+
+                            <div class="form-group">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>
+                                        <th>tes</th>
+                                    </tr>
+
+                                    <tbody id="items">
+                                        @foreach (var item in (IEnumerable<POS.ViewModel.ItemsViewModel>)ViewBag.ListItems)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Name)
+                                                </td>
+                                                <td class="col-md-1">
+                                                    <input type="checkbox" class="checkbox ChooseItems" name="ItemID" value="@item.ID" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm pull-right">Save</button>
+                                </div>
+                            </div>
+}

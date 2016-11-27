@@ -167,53 +167,54 @@ namespace POS.Web.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     //return RedirectToAction("Register");
+                    using (POSContext context = new POSContext())
+                    {
+                        using (var dbTransaction = context.Database.BeginTransaction())
+                        {
+                            Employee item = new Employee()
+                            {
+                                Email = model.Email,
+                                FirstName = model.FirstName,
+                                LastName = model.LastName,
+                                Title = model.Title,
+                                CreatedBy = 1,
+                                CreatedOn = DateTime.Now,
+                                ModifiedBy = 1,
+                                ModifiedOn = DateTime.Now
+                            };
+                            context.TEmployee.Add(item);
+                            try { context.SaveChanges(); }
+                            catch (Exception) { }
+
+                            EmployeeOutlet vEOutlet = new EmployeeOutlet()
+                            {
+                                EmployeeID = item.ID,
+                                OutletID = model.OutletID,
+                                RoleID = model.RoleID,
+                                CreatedBy = 1,
+                                CreatedOn = DateTime.Now,
+                                ModifiedBy = 1,
+                                ModifiedOn = DateTime.Now
+                            };
+                            context.TEmployeeOutlet.Add(vEOutlet);
+                            context.SaveChanges();
+
+
+                            try
+                            {
+                                dbTransaction.Commit();
+                                return RedirectToAction("Register");
+                            }
+                            catch (Exception)
+                            {
+                                dbTransaction.Rollback();
+                            }
+                        }
+
+                    }
                 }
                 
-                using (POSContext context = new POSContext())
-                {
-                    using (var dbTransaction = context.Database.BeginTransaction())
-                    {
-                        Employee item = new Employee()
-                        {
-                            Email = model.Email,
-                            FirstName = model.FirstName,
-                            LastName = model.LastName,
-                            Title = model.Title,
-                            CreatedBy = 1,
-                            CreatedOn = DateTime.Now,
-                            ModifiedBy = 1,
-                            ModifiedOn = DateTime.Now
-                        };
-                        context.TEmployee.Add(item);
-                        try { context.SaveChanges(); }
-                        catch (Exception) { }
-
-                        EmployeeOutlet vEOutlet = new EmployeeOutlet()
-                        {
-                            EmployeeID = item.ID,
-                            OutletID = model.OutletID,
-                            RoleID = model.RoleID,
-                            CreatedBy = 1,
-                            CreatedOn = DateTime.Now,
-                            ModifiedBy = 1,
-                            ModifiedOn = DateTime.Now
-                        };
-                        context.TEmployeeOutlet.Add(vEOutlet);
-                        context.SaveChanges();
-
-
-                        try
-                        {
-                            dbTransaction.Commit();
-                            return RedirectToAction("Register");
-                        }
-                        catch (Exception)
-                        {
-                            dbTransaction.Rollback();
-                        }
-                    }
-
-                }
+                
                 AddErrors(result);
             }
 

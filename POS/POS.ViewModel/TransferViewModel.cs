@@ -37,17 +37,20 @@ namespace POS.ViewModel
         public Nullable<DateTime> ModifiedOn { get; set; }
 
         public List<TransferDetailViewModel> TransferDetail { get; set; }
+
         public List<int> VariantID { get; set; }
 
-        [Display(Name = "SKU")]
-        public string SKU { get; set; }
+
         [Display(Name = "Quantity")]
-        public Nullable<int> Quantity { get; set; }
+        public List<int> Quantity { get; set; }
         [Display(Name = "VariantName")]
         public string VariantName { get; set; }
         [Display(Name = "InStock")]
-        public Nullable<int> InStock { get; set; }
+        public List<int> InStock { get; set; }
         [Display(Name = "Transfer")]
         public Nullable<int> Transfer { get; set; }
+        //public List<int> HeaderID { get; set; }
+        public List<ItemsVariantViewModel> ItemsInventory { get; set; }
+        public List<int> Beginning { get; set; }
     }
 }

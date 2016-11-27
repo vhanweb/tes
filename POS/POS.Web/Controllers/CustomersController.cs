@@ -9,7 +9,6 @@ using POS.ViewModel;
 
 namespace POS.Web.Controllers
 {
-    [Authorize]
     public class CustomersController : Controller
     {
          //GET: NewCustomer

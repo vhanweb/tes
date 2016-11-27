@@ -56,5 +56,8 @@ namespace POS.ViewModel
 
         [Display(Name = "Modified On")]
         public Nullable<DateTime> ModifiedOn { get; set; }
+
+        [Display(Name = "Full Address")]
+        public string AddressFull { get; set; }
     }
 }

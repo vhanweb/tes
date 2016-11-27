@@ -34,6 +34,31 @@ namespace POS.ViewModel
         [Display(Name="Created Name")]
         public string CreatedName { get; set; }
 
+        [Display(Name = "Total")]
+        public Nullable<int> Total { get; set; }
+
+        [Display(Name = "Status ID")]
+        public Nullable<int> StatusID { get; set; }
+
+        [Display(Name = "Varian ID")]
+        public List<int> VariantID { get; set; }
+
+        [Display(Name = "PO Detail ID")]
+        public List<int> PODetailID { get; set; }
+
+        [Display(Name = "In Stok")]
+        public List<int> InStok { get; set; }
+
+        [Display(Name = "Quantity")]
+        public List<int> Quantity { get; set; }
+
+        [Display(Name = "UnitCost")]
+        public List<decimal> UnitCost { get; set; }
+
+        [Display(Name = "SubTotal")]
+        public List<decimal> SubTotal { get; set; }
+
+
         [Display]
         public SuppliersViewModel Supplier { get; set; }
 

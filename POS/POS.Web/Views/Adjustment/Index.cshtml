@@ -1,64 +1,33 @@
 ﻿@model IEnumerable<POS.ViewModel.AdjustmentViewModel>
 
-<div class="row">
-    <div class="col-md-2">
-        <h3>List Adjustment</h3>
+
+
+<div class="box" >
+    <div class="box-header">
+        <div class="row">
+            <div class="col-md-2">
+                <h3>List Adjustment</h3>
+            </div>
+            <div class="col-md-10"></div>
+        </div>
+
+        <form class="form-inline pull-right">
+            <div class="form-group">
+                <button class="btn btn-primary">Import/Export</button>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" id="btn-create-adjustment">Create Adjustment</button>
+            </div>
+        </form>
+
+
     </div>
-    <div class="col-md-10"></div>
+    <div class="box-body" id="list-adj">
+
+    </div>
+
 </div>
 
-<form class="form-inline pull-right">
-    <div class="form-group">
-        <button class="btn btn-primary">Import/Export</button>
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary" id="btn-create-adjustment">Create Adjustment</button>
-    </div>
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedOn)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.VariantName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Note)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Adjusment)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedOn)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.VariantName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Note)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Adjusment)
-                </td>
-            </tr>
-        }
-    </tbody>
-
-</table>
 
 @*modal pertama*@
 <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -110,12 +79,26 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
+        //load list-adj
+        function loadData() {
+            $.ajax({
+                url: '@Url.Action("load","Adjustment")',
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+                    $("#list-adj").html(result);
+                },
+            });
+        }
+
+
         $(document).ready(function () {
+            loadData();
 
             //script tombol create adjustment
             $("#btn-create-adjustment").click(function (e) {
                 e.preventDefault();
-
+                $("#form-model-tittle").html("Create Adjusment")
                 $.ajax({
                     url: '@Url.Action("Add","Adjustment")',
                     dataType: 'html',
@@ -147,19 +130,20 @@
             $("#search-data").on("click", ".btn-ok-add", function (e) {
                 e.preventDefault();
                 var vID = $(this).attr("data-id")
-                var vSKU = $(this).attr("data-sku")
                 var vName = $(this).attr("data-nama")
                 var vInstock = $(this).attr("data-instock")
                 var vActual = $(this).parent().parent().find(".item-actual").val();
+                var vAdj = parseInt(vActual) - parseInt(vInstock); alert("Adjusment = " + vAdj);
                 var vData = '<tr>' +
-                    '<td class="text-center"><input type="hidden" name="VariantID" value="' + vID + '"/>' + vSKU + '</td> ' +
-                    '<td class="text-center">' + vName + '</td>' +
-                    '<td class="text-center">' + vInstock + '</td>' +
-                    '<td class="text-center"><input type="text" id="jumlah-transfer" value="' + vActual + '" class="form-control"/></td>' +
-                    '<td class="text-center"><button type="button" class="btn btn-danger btn-xs btn-del-items"><i class="fa fa-trash-o" ></i></button></td>' +
+                    '<td class="text-center"><input type="hidden" name="VariantID" value="' + vID + '"/>' + vName + '</td>' +
+                    '<td class="text-center"><input type="text" id="jumlah-instock" readonly="readonly" name="InStock" value="' + vInstock + '" class="form-control"/></td>' +
+                    '<td class="text-center"><input type="text" id="jumlah-actual" name="ActualStock" value="' + vActual + '" class="form-control"/></td>' +
+                    '<input type="hidden" id="jumlah-adj" name="AdjusmentList" value="' + vAdj + '" class="form-control"/>' +
+                    '<td class="text-center"><button type="button" class="btn btn-danger btn-xs btn-del-adj"><i class="fa fa-trash-o" ></i></button></td>' +
                 '</tr>';
+
                 $("#list-detail-adj").append(vData);
-                $("#search-modal").modal('hide');
+                $("#search-modal").modal('show');
             });
 
             //untuk menghapus satu baris dari list bila salah
@@ -174,7 +158,7 @@
                 var txtSearch = $("#search-txt").val();
 
                 $.ajax({
-                    url: '@Url.Action("GetVariantSearch","AJAX")',
+                    url: '@Url.Action("GetVariantSearchAdj", "AJAX")',
                     data: { searchKey: txtSearch },
                     dataType: 'html',
                     type: 'GET',
@@ -183,6 +167,36 @@
                     },
                 });
             });
+
+            //mengesave data dari modal
+            $("#form-modal-data").on("submit", "#form-adjusment", function (e) { //belum bisa save!!!
+                e.preventDefault()
+                var vData = $(this).serialize();
+                var vUrl = $(this).attr("action");
+                var vMethod = $(this).attr("method");
+
+                $.ajax({
+                    url: vUrl,
+                    data: vData,
+                    method: vMethod,
+                    success: function (result) {
+                        if (result.success) {
+                            $("#form-modal-data").html(result);
+
+                        } else {
+                            $("#form-modal").modal('hide');
+                            loadData();
+                        }
+                    }
+                });
+                return false;
+            });
+            //delete row
+            $("#form-modal").on("click", ".btn-del-adj", function (e) {
+                e.preventDefault();
+                $(this).parent().parent().remove();
+            });
+
         });
     </script>
 }

@@ -59,7 +59,7 @@
                     <table class="table table-striped table-bordered ">
                         <thead>
                             <tr>
-                                <th class="text-center">SKU</th>
+
                                 <th class="text-center">Variant Name</th>
                                 <th class="text-center">InStock</th>
                                 <th class="text-center">Transfer Quantity</th>
@@ -141,7 +141,7 @@
                 var txtSearch = $("#search-txt").val(); //val di search-text adalah yang kita cari di searchkey
 
                 $.ajax({
-                    url: '@Url.Action("GetVariantSearch", "AJAX")',
+                    url: '@Url.Action("GetVariantSearchTransfer", "AJAX")',
                     data: { searchKey: txtSearch },
                     dataType: 'html',
                     type: 'GET',
@@ -154,21 +154,20 @@
             // untuk mengklik item terpilih
             $("#search-data").on("click", ".btn-ok-transfer", function (e) { //klik ok bapda bagian yang di pilih
                 e.preventDefault();
-                var vSKU = $(this).attr("data-sku")
+
                 var vID = $(this).attr("data-id")
                 var vName = $(this).attr("data-nama")
                 var vInstock = $(this).attr("data-instock")
                 var vTransfer = $(this).parent().parent().find(".item-transfer").val();
                 var vData = '<tr>' +
-                '<td class="text-center"><input type="hidden" name="VariantID" value="' + vID + '"/>' + vSKU + '</td>' +
+                '<td class="text-center"><input type="hidden" name="VariantID" value="' + vID + '"/>' + vName + '</td>' +
 
-                '<td class="text-center">' + vName + '</td>' +
-                '<td class="text-center">' + vInstock + '</td>' +
-                '<td class="text-center"><input type="text" id="jumlah-transfer" value="' + vTransfer + '" class="form-control"/></td>' +
+                '<td class="text-center"><input type="text" readonly="readonly" name="InStock" value="' + vInstock + '" class="form-control"/></td>' +
+                '<td class="text-center"><input type="text" id="jumlah-transfer" name="Quantity" value="' + vTransfer + '" class="form-control"/></td>' +
                 '<td class="text-center"><button type="button" class="btn btn-danger btn-xs btn-del-items"><i class="fa fa-trash-o" ></i></button></td>' +
             '</tr>';
                 $("#list-detail-transfer").append(vData);
-                $("#search-modal").modal('hide');
+                $("#search-modal").modal('show');
             });
             //untuk menghapus satu baris dari list bila salah
             $("#list-detail-transfer").on("click", ".btn-del-items", function (e) {

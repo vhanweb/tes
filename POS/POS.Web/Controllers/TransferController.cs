@@ -19,7 +19,7 @@ namespace POS.Web.Controllers
             ViewBag.ListOutlet = new SelectList(OutletDAL.GetData(), "ID", "OutletName");
             var UserId = User.Identity.GetUserId();
 
-            ViewBag.Transfer = new SelectList(EmployeeOutletDAL.GetDataByID(int.Parse(UserId)), "ID", "OutletName");
+            ViewBag.Transfer = new SelectList(EmployeeOutletDAL.GetDataByID(int.Parse(UserId)), "OutletID", "OutletName");
             return View();
         }
 
@@ -39,28 +39,30 @@ namespace POS.Web.Controllers
                         int OutletId = 0;
                         OutletId = (int)EmployeeOutletDAL.GetDataOutletByUserId(UserId).OutletID;
                         TransferStock item = new TransferStock()
-                            {
-                                ID = model.ID,
-                                FromOutlet = OutletId,
-                                ToOutlet = model.ToOutlet,
-                                Note = model.Note,
-                                CreatedBy = UserId,
-                                CreatedOn = DateTime.Now,
-                                ModifiedBy = UserId,
-                                ModifiedOn = DateTime.Now,
-                            };
+                        {
+                            ID = model.ID,
+                            FromOutlet = OutletId,
+                            ToOutlet = model.ToOutlet,
+                            Note = model.Note,
+                            CreatedBy = UserId,
+                            CreatedOn = DateTime.Now,
+                            ModifiedBy = UserId,
+                            ModifiedOn = DateTime.Now,
+                        };
                         context.TTransferStock.Add(item);
                         try { context.SaveChanges(); }
                         catch (Exception) { }
 
+                        int i = 0;
                         foreach (var detail in model.VariantID) //pakai Sku hasil null, pakai Variant ID hasil null
                         {
                             TransferStockDetail vDetail = new TransferStockDetail()
                             {
                                 HeaderID = item.ID,
                                 VariantID = detail,
-                                InStock = model.InStock,
-                                Quantity = model.Quantity,
+                                InStock = model.InStock[i],
+                                Quantity = model.Quantity[i],
+
                                 CreatedBy = UserId,
                                 CreatedOn = DateTime.Now,
                                 ModifiedBy = UserId,
@@ -68,19 +70,22 @@ namespace POS.Web.Controllers
                             };
                             context.TTransferStockDetail.Add(vDetail);
 
-                            ItemsIventory vInv = new ItemsIventory()
+                            ItemsIventory vInv = context.TItemsIventory.Where(t => t.VariantID == detail).FirstOrDefault();
+                            if (vInv != null)
                             {
-                                VariantID = detail,
-                                Transfer = vDetail.Quantity,
-                                CreatedBy = UserId,
-                                CreatedOn = DateTime.Now,
-                                ModifiedBy = UserId,
-                                ModifiedOn = DateTime.Now,
+                                vInv.VariantID = detail;
+                                vInv.Beginning = model.InStock[i];
+                                vInv.Transfer = model.Quantity[i];
+                                vInv.CreatedBy = UserId;
+                                vInv.CreatedOn = DateTime.Now;
+                                vInv.ModifiedBy = UserId;
+                                vInv.ModifiedOn = DateTime.Now;
                             };
-                            context.TItemsIventory.Add(vInv);
+                            try { context.SaveChanges(); }
+                            catch (Exception) { }
+                            i++;
                         }
-                        try { context.SaveChanges(); }
-                        catch (Exception) { }
+
 
                         try
                         {

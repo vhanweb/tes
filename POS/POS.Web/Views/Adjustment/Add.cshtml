@@ -1,8 +1,6 @@
 ﻿@model POS.ViewModel.AdjustmentViewModel
 
-<h2>Create Adjustment</h2>
-
-@using (Html.BeginForm("Add", "Adjusment", null, FormMethod.Post, new { @id = "form-adjusment" }))
+@using (Html.BeginForm("Add", "Adjustment", null, FormMethod.Post, new { @id = "form-adjusment" }))
 {
     @Html.AntiForgeryToken()
 
@@ -10,9 +8,9 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.OutletName, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.OutletName, new { @class = "control-label col-md-2", @id = "outlet-name" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.OutletName, (IEnumerable<SelectListItem>)ViewBag.Transfer ,new { @class = "form-control", @disabled = "" })
+                @Html.DropDownListFor(model => model.OutletName, (IEnumerable<SelectListItem>)ViewBag.Transfer, new { @class = "form-control", @disabled = "" })
                 @Html.ValidationMessageFor(model => model.OutletID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -20,7 +18,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Note, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Note,new { @class = "form-control col-md-10"  })
+                @Html.TextAreaFor(model => model.Note, new { @class = "form-control col-md-10", @id = "outlet-note" })
                 @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,10 +40,11 @@
                 <table class="table table-stripped table-bordered">
                     <thead>
                         <tr>
-                            <th class="text-center">SKU</th>
+
                             <th class="text-center">Variant Name</th>
                             <th class="text-center">In Stock</th>
                             <th class="text-center">Actual Stock</th>
+                            @*<th class="text-center">Adjusment</th>*@
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -62,16 +61,5 @@
             </div>
         </div>
     </div>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            
-        });
-    </script>
 }
 

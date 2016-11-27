@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdjustmentStockDetailViewModel.cs" />
+    <Compile Include="AdjustmentDetailViewModel.cs" />
     <Compile Include="AdjustmentViewModel.cs" />
     <Compile Include="CategoriesViewModel.cs" />
     <Compile Include="CustomersViewModel.cs" />

@@ -2,82 +2,47 @@
 
 
 <h2>Pruschase Order</h2>
-<div class="form-horizontal">
-    <div class="input-group">
-        <input type="hidden" id="search-type" value="item" />
-        <input type="text" id="search-txt" class="form-control" placeholder="Search Key" />
-        <span class="input-group-btn">
-            <button class="btn btn-primary" id="btn-src-modal"><i class="fa fa-search"></i></button>
-        </span>
 
-        <div class="col-md-2 pull-right">
-            <button type="button" class="btn btn-primary btn-sm create-po">Create Purchase Order</button>
-        </div>
-        <div class="col-md-1 pull-right">
-            <button id="export-po" type="button" class="btn btn-primary btn-sm">Export</button>
-        </div>
-    </div>
-
-
-
-</div>
 <b></b>
 <div class=" box">
-    <div class="box-body">
-        <table class="table table-bordered ">
-            <thead>
-                <tr>
-                    <th class="text-center col-md-2">
-                        @Html.DisplayName("Date")
-                    </th>
-                    <th class="text-center col-md-2">
-                        @Html.DisplayNameFor(model => model.Supplier)
-                    </th>
-                    <th class="text-center col-md-2">
-                        @Html.DisplayNameFor(model => model.OrderNo)
-                    </th>
-                    <th class="text-center col-md-2">
-                        @Html.DisplayName("Total")
-                    </th>
-                    <th class="text-center col-md-2">
-                        @Html.DisplayName("Status")
-                    </th>
-                    <th class="text-center col-md-1">
-                        Tools
-                    </th>
-                </tr>
-            </thead>
+    <div class="box-header">
+        <div class="input-group">
+            <input type="text" id="search-txt" class="form-control" placeholder="Search Key" />
+            <span class="input-group-btn">
+                <button class="btn btn-primary" id="btn-srcindex"><i class="fa fa-search"></i></button>
+            </span>
 
-            <tbody class="text-center">
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ModifiedOn)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Supplier)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OrderNo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Total)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StatusName)
-                        </td>
+            <div class="col-md-3">
+                @Html.DropDownList("StatusID", (IEnumerable<SelectListItem>)ViewBag.ListStatus, "All Status", new { @class = "form-control" })
+            </div>
+            <div class="col-md-2">
+                <button id="export-po" type="button" class="btn btn-primary btn-sm">Export</button>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary btn-sm create-po">Create Purchase Order</button>
+            </div>
+        </div>
 
-                        <td>
-                            <button type="button" class="btn btn-warning btn-xs btn-detail" data-id="@item.ID"><i class="glyphicon glyphicon-edit"></i></button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    </div>
+    <div id="content" class="box-body">
+
     </div>
 </div>
 
+@*menampilkan menu detail*@
+<div id="modal-podetailedit" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div id="modal-podetailedit-data" class="modal-body">
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @*menampilkan Pop Up pada halaman pertama untuk manampilkan create purchase order*@
 <div id="modal-purchaseorder" class="modal fade" role="dialog">
@@ -110,6 +75,7 @@
 </div>
 
 
+
 @*menampilkan Pop Up yang ketiga klik tombol search di modal untuk mencari item yang mau ditambahkan serta untuk search item*@
 <div id="search-item-modal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -118,12 +84,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
             </div>
+
             <div class="modal-body">
                 <div class="input-group">
-                    <input type="hidden" id="search-type" value="item" />
-                    <input type="text" id="search-txt" class="form-control" placeholder="Mencari Item" />
+                    <input type="text" id="search-txt2" class="form-control" placeholder="Mencari Item" />
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" id="btn-src-itemvariant"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-primary" id="btn-srcitem"><i class="fa fa-search"></i></button>
                     </span>
                 </div>
                 <div class="row">
@@ -136,13 +102,45 @@
     </div>
 </div>
 
+
 @section Scripts {
     <script type="text/javascript">
+        function LoadData() {
+            $.ajax({
+                url: '@Url.Action("Load","PurchaseOrder")',
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+                    $('#content').html(result);
+                }
+            });
+        };
         $(document).ready(function () {
+            LoadData();
             $('#order').val('0');
             $('#unit-cost').val('0');
 
-            $('#modal-purchaseorder-data').on('click', '.click-edit', function () {
+            $("#StatusID").change(function () {
+                var vId = $(this).val();
+                if (vId == 0) {
+                    LoadData();
+                }
+                else {
+                    $.ajax({
+                        url: "@Url.Action("GetDataByStatus", "PurchaseOrder")",
+                        data: { id: vId },
+                        dataType: 'html',
+                        type: 'GET',
+                        success: function (result) {
+                            $("#content").html(result);
+                        },
+                    });
+                }
+
+            });
+
+        //meanampilkan edit
+            $('#modal-podetailedit-data').on('click', '.click-edit', function () {
                 var vID = $(this).attr('data-id');
                 $.ajax({
                     url: '@Url.Action("Edit","PurchaseOrder")',
@@ -150,24 +148,32 @@
                     dataType: 'html',
                     type: 'GET',
                     success: function (result) {
-                        $('#modal-podetail').modal('show');
-                    }
-                });
-                $('#modal-podetail').modal('show');
-            });
-
-            $('.btn-detail').click(function () {
-                var vId = $(this).attr('data-id');
-                $.ajax({
-                    url: '@Url.Action("Detail", "PurchaseOrder")',
-                    data : {Id : vId},
-                    dataType: 'html',
-                    type: 'GET',
-                    success: function (result) {
                         $('#modal-purchaseorder-data').html(result);
                         $('#modal-purchaseorder').modal('show');
                     }
                 });
+            });
+
+            //menampilkan detail
+            $('#content').on('click', '.btn-detail', function () {
+                var vStatus = $(this).attr('data-status');
+                var vId = $(this).attr('data-id');
+                if (vStatus > 1) {
+                    $(this).empty;
+                }
+                else {
+                    $.ajax({
+                        url: '@Url.Action("Detail", "PurchaseOrder")',
+                        data: { Id: vId },
+                        dataType: 'html',
+                        type: 'GET',
+                        success: function (result) {
+                            $('#modal-podetailedit-data').html(result);
+                            $('#modal-podetailedit').modal('show');
+                        }
+                    });
+                }
+
             });
             //pop up add purchase order(tombol create po)
             $('.create-po').click(function () {
@@ -208,10 +214,23 @@
                 });
             });
 
-            //mencari item di list item
-            $('#search-item-modal').on('click', '#btn-src-itemvariant', function () {
-                var type = $("#search-type").val();
-                var txtSearch = $("search-txt").val();
+            //tombol search index
+            $('#btn-srcindex').click(function () {
+                var txtSearch = $("#search-txt").val();
+                    $.ajax({
+                        url: '@Url.Action("GetDataSearch", "PurchaseOrder")',
+                        data: { searchKey: txtSearch },
+                        dataType: 'html',
+                        type: 'GET',
+                        success: function (result) {
+                            $("#content").html(result);
+                        },
+                    });
+            });
+
+            //tombol search item
+            $('#btn-srcitem').click(function () {
+                var txtSearch = $("#search-txt2").val();
                 $.ajax({
                     url: '@Url.Action("GetItemSearch", "AJAX")',
                     data: { searchKey: txtSearch },
@@ -223,6 +242,9 @@
                 });
             });
 
+           
+
+
             //menambahkan data pada saat kilk tombol ceklis
             $("#search-data-itemvariant").on("click", ".btn-ok-item", function (e) {
                 e.preventDefault();
@@ -231,7 +253,8 @@
                 var vstok = $(this).attr("data-stok");
                 var vData =
                     '<tr>' +
-                        '<td><input type="hidden" name="VariantID" value="' + vID + '"/>' + vNamaVariant + '</td>' +
+                        '<td><input type="hidden" name="VariantID" value="' + vID + '"/>' + ' <input type="hidden" name="PODetailID" value="' + 0 + '"/>' + vNamaVariant +
+                        '</td>' +
                         '<td>' + vstok + '</td>' +
                         '<td><input name="Quantity" type="text" class="orderc form-control read" style="width:60px;" id="order_' + vID + '"/></td>' +
                         '<td><input name="UnitCost" type="text" class="unit-cost form-control read" style="width:100px;" id ="unitcost_' + vID + '"/></td>' +
@@ -242,8 +265,8 @@
                 $("#list-detail-item").append(vData);
                 $("#search-item-modal").modal('hide');
             });
-        //hitung subtotal
-            $('#modal-podetail-data').on('change', '.unit-cost', function (e) {
+            //hitung subtotal
+            $('#modal-podetail-data').on('change', '.unit-cost,.orderc', function (e) {
                 e.preventDefault();
                 var order = $(this).parent().parent().find(".orderc").val();
                 var unitcost = $(this).parent().parent().find('.unit-cost').val();
@@ -269,12 +292,12 @@
 
                 var aData = $('#list-detail-item').contents();
                 $('#list-detail-po').append(aData);
+                $(":disabled");
             });
 
             //save data purchase order
             $("#modal-purchaseorder-data").on("submit", "form-addpurchaseorder", function (e) {
                 e.preventDefault();
-                alert('tes');
                 var vData = $(this).serialize();
                 var vUrl = $(this).attr('action');
                 var vMethod = $(this).attr('method');

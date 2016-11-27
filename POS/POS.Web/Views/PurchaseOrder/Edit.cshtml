@@ -1,54 +1,145 @@
-﻿@model POS.ViewModel.PurchaseOrderDetailsViewModel
+﻿@model POS.ViewModel.ListPurchaseOrderViewModel
 
-<h4 class="text-center">Add Purchase Order</h4>
+<h4 class="text-center">Edit Purchase Order</h4>
 <hr />
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Edit", "PurchaseOrder", null, FormMethod.Post, new { @id = "form-addpurchaseorder" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.ID)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form role="form" id="data-form">
 
-        <div class="form-group">
-            @Html.Label("Item", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-12">
-                <div class="input-group">
-                    @Html.HiddenFor(model => model.VariantID, new { @class = "form-control" })
-                    <input type="text" id="NamaItem" class="form-control" />
-                    <div class="input-group-btn">
-                        <button type="button" id="btn-src-item" class="btn btn-flat btn-primary">
-                            <i class="fa fa-search"></i>
-                        </button>
+            <div class="form-group">
+
+                <div class="col-md-12">
+                    <h4>Outlet</h4>
+                    <hr />
+                    @Html.DropDownListFor(model => model.OutletID, (IEnumerable<SelectListItem>)ViewBag.ListOutlet, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.OutletID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+
+                <div class="col-md-12">
+                    <h4>Suppliers</h4>
+                    <hr />
+                    @Html.DropDownListFor(model => model.SupplierID, (IEnumerable<SelectListItem>)ViewBag.ListSupplier, "No Supplier(Default)", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+
+                <div class="col-md-12">
+                    <h4>Notes</h4>
+                    <hr />
+                    @Html.TextAreaFor(model => model.Notes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <h4>Perchase Order</h4>
+                <hr />
+
+                <table id="tableharga" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>In Stok</th>
+                            <th>Order</th>
+                            <th>Unit Cost</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="list-detail-po">
+                        @{
+    int i = 0;
+                        }
+                        @foreach (var item in Model.PurchaseOrderDetail)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="hidden" id="PODetailID_ @i.ToString()" name="PODetailID" value="@Html.DisplayFor(m => item.ID)">
+                                    <input type="hidden" id="VariantID_ @i.ToString()" name="VariantID" value="@Html.DisplayFor(m => item.VariantID)">
+                                    <input type="text" id="VarianName_ @i.ToString()" class="form-control" readonly="readonly" name="VarianName" value="@Html.DisplayFor(m => item.VarianName)">
+                                </td>
+
+                                <td><input type="text" id="InStok_ @i.ToString()" class="form-control" readonly="readonly" name=" instok" value="@Html.DisplayFor(m => item.InStok)"></td>
+
+                                <td><input name="Quantity" type="text" class="orderc form-control read" style="width:60px;" id="Quantity_ @i.ToString()" value="@Html.DisplayFor(m => item.Quantity)" /></td>
+
+                                <td><input name="UnitCost" type="text" class="unit-cost form-control read" style="width:100px;" id="UnitCost_ @i.ToString()" value="@Html.DisplayFor(m => item.UnitCost)"  /></td>
+
+                                <td><input name="SubTotal" type="text" class="totalc form-control read" style="width:100px;" id="SubTotal_ @i.ToString()" readonly="readonly" value="@Html.DisplayFor(m => item.SubTotal)" /></td>
+
+                                <td><button type="button" class="btn btn-danger btn-xs btn-del-item"><i class="fa fa-trash-o"></i></button></td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <div class="col-md-12">
+
+                        @Html.Label("TOTAL", new { @class = "label-control pull-left col-md-10" })
+                        <div class="col-md-2">
+                            <button type="button" id="btn-total" class="btn btn-danger">Total</button>
+                            <input id="total-3" name="Total" type="text" class="form-control" />
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                @Html.ValidationMessageFor(model => model.VariantID, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary col-md-12 btn-add-po">ADD PURCHASE ORDER</button>
+                </div>
+            </div>
+
+        </form>
+        <div class="modal-footer">
+            <div class="col-md-2 pull-right">
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
+            </div>
+            <div class="col-md-2 pull-right">
+                <button type="button" class="btn btn-default btn-outline btn-block" data-dismiss="modal">Cancel</button>
             </div>
         </div>
-        
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>In Stok</th>
-                        <th>Order</th>
-                        <th>Unit Cost</th>
-                        <th>Total</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="list-detail-item"></tbody>
-            </table>
-    
-    <div class="modal-footer">
-        <div class="col-md-2 pull-right">
-            <button type="button" class="btn btn-primary  btn-save col-md-12" data-dismiss="modal">Add</button>
-        </div>
-        <div class="col-md-2 pull-left">
-            <button type="button" class="btn btn-default col-md-12" data-dismiss="modal">Cancel</button>
-        </div>
+
     </div>
-    </div>
+
 }
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btn-total').click(function (e) {
+            e.preventDefault();
+            var total = 0;
+            $.each($('#list-detail-po').parent().parent().find(".totalc"), function (i, v) {
+                var subtotal = $(this).parent().parent().find('.totalc').val();
+                total = parseInt(subtotal) + total;
+            });
+            $('#total-3').val(total);
+        });
+
+    });
+    $('#list-detail-po').on('change', '.unit-cost', function (e) {
+        e.preventDefault();
+        var order = $(this).parent().parent().find(".orderc").val();
+        var unitcost = $(this).parent().parent().find('.unit-cost').val();
+        var subtotal = parseInt(order) * parseInt(unitcost);
+        $(this).parent().parent().find('.totalc').val(subtotal);
+    });
+
+</script>
+
+
+
+
 

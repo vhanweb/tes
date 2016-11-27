@@ -18,18 +18,15 @@ namespace POS.DAL
                 //result = context.TPurchaseOrder.ToList();
                 result = (from op in context.TPurchaseOrder
                           join sp in context.TSuppliers on op.SupplierID equals sp.ID
-                          join oph in context.TPurchaseOrderHistory on op.ID equals oph.HeaderID
-                          join ops in context.TPurchaseOrderStatus on oph.StatusID equals ops.ID
-                          join opd in context.TPurchaseOrderDetail on op.ID equals opd.HeaderID
+                          join ops in context.TPurchaseOrderStatus on op.StatusID equals ops.ID
                           select new PurchaseOrderViewModel()
                           {
                               ID = op.ID,
-                              StatusID = oph.StatusID,
-                              SupplierID = op.SupplierID,
+                              StatusID = op.StatusID,
                               StatusName = ops.StatusName,
                               OrderNo = op.OrderNo,
                               Supplier = sp.Name,
-                              SubTotal = opd.SubTotal,
+                              Total = op.Total,
                               CreatedBy = op.CreatedBy,
                               CreatedOn = op.CreatedOn,
                               ModifiedBy = op.ModifiedBy,
@@ -39,37 +36,59 @@ namespace POS.DAL
             return result;
         }
 
-        public static PurchaseOrderViewModel GetDataedit(int Id)
+        public static List<PurchaseOrderViewModel> GetDataByStatus(int id)
         {
-            PurchaseOrderViewModel result = new PurchaseOrderViewModel();
+            List<PurchaseOrderViewModel> result = new List<PurchaseOrderViewModel>();
             using (POSContext context = new POSContext())
             {
                 //result = context.TPurchaseOrder.ToList();
                 result = (from op in context.TPurchaseOrder
                           join sp in context.TSuppliers on op.SupplierID equals sp.ID
-                          join oph in context.TPurchaseOrderHistory on op.ID equals oph.HeaderID
-                          join ops in context.TPurchaseOrderStatus on oph.StatusID equals ops.ID
-                          join opd in context.TPurchaseOrderDetail on op.ID equals opd.HeaderID
-                          where op.ID == Id
+                          join ops in context.TPurchaseOrderStatus on op.StatusID equals ops.ID
+                          where ops.ID == id
                           select new PurchaseOrderViewModel()
                           {
                               ID = op.ID,
-                              StatusID = oph.StatusID,
-                              SupplierID = op.SupplierID,
+                              StatusID = op.StatusID,
                               StatusName = ops.StatusName,
                               OrderNo = op.OrderNo,
-                              Total = op.Total,
                               Supplier = sp.Name,
-                              SubTotal = opd.SubTotal,
+                              Total = op.Total,
                               CreatedBy = op.CreatedBy,
                               CreatedOn = op.CreatedOn,
                               ModifiedBy = op.ModifiedBy,
                               ModifiedOn = op.ModifiedOn
-                          }).FirstOrDefault();
+                          }).ToList();
             }
             return result;
         }
 
+        public static List<PurchaseOrderViewModel> GetDataBySearch(string searchKey)
+        {
+            List<PurchaseOrderViewModel> result = new List<PurchaseOrderViewModel>();
+            using (POSContext context = new POSContext())
+            {
+                
+                result = (from op in context.TPurchaseOrder
+                          join sp in context.TSuppliers on op.SupplierID equals sp.ID
+                          join ops in context.TPurchaseOrderStatus on op.StatusID equals ops.ID
+                          where op.OrderNo.Contains(searchKey) || sp.Name.Contains(searchKey) || op.Total.ToString().Contains(searchKey) 
+                          select new PurchaseOrderViewModel()
+                          {
+                              ID = op.ID,
+                              StatusID = op.StatusID,
+                              StatusName = ops.StatusName,
+                              OrderNo = op.OrderNo,
+                              Supplier = sp.Name,
+                              Total = op.Total,
+                              CreatedBy = op.CreatedBy,
+                              CreatedOn = op.CreatedOn,
+                              ModifiedBy = op.ModifiedBy,
+                              ModifiedOn = op.ModifiedOn
+                          }).ToList();
+            }
+            return result;
+        }
 
         public static ListPurchaseOrderViewModel GetDataByIdPO(int id)
         {
@@ -77,29 +96,27 @@ namespace POS.DAL
             using (POSContext context = new POSContext())
             {
                 result = (from op in context.TPurchaseOrder
-                          //join epo in context.TEmployeeOutlet on op.OutletID equals epo.ID
-                          //join ep in context.TEmployee on epo.EmployeeID equals ep.ID
                           where op.ID == id
                           select new ListPurchaseOrderViewModel()
                           {
                               ID = op.ID,
                               SupplierID = op.SupplierID,
+                              StatusID = op.StatusID,
                               Notes = op.Notes,
                               OrderNo = op.OrderNo,
                               OutletID = op.OutletID,
                               CreatedBy = op.CreatedBy,
                               CreatedOn = op.CreatedOn,
-                              //CreatedName = ep.FirstName + " " + ep.LastName
                           }).FirstOrDefault();
 
                 PurchaseOrderViewModel employee = new PurchaseOrderViewModel();
                 employee = (from op in context.TPurchaseOrder
-                            join epo in context.TEmployeeOutlet on op.OutletID equals epo.ID
-                            join ep in context.TEmployee on epo.EmployeeID equals ep.ID
+                            join us in context.TUser on op.CreatedBy equals us.Id
+                            join ep in context.TEmployee on us.Email equals ep.Email
                             where op.ID == id
                             select new PurchaseOrderViewModel()
                             {
-                                fullname = ep.FirstName + ep.LastName,
+                                fullname = ep.FirstName +" "+ ep.LastName,
                                 email = ep.Email
                             }).FirstOrDefault();
                 result.PurchaseOrder = employee;
@@ -142,6 +159,7 @@ namespace POS.DAL
                               OutletName = ot.OutletName,
                               Phone = ot.Phone,
                               FullAddress = ot.Address + ", " + p.ProvinceName + ", " + r.RegionName + ", " + ot.PostalCode
+
                           }).FirstOrDefault();
                 result.Outlet = outlet;
 
@@ -156,7 +174,7 @@ namespace POS.DAL
                                            ID = pod.ID,
                                            VariantID = pod.VariantID,
                                            VarianName = iv.VariantName,
-                                           InStok = ii.Ending,
+                                           InStok = ii.Beginning,
                                            Quantity = pod.Quantity,
                                            HeaderID = pod.HeaderID,
                                            UnitCost = pod.UnitCost,
@@ -231,6 +249,19 @@ namespace POS.DAL
             }
             return OrderNo;
         }
+
+        public static List<PurchaseOrderStatus> GetStatus()
+        {
+            List<PurchaseOrderStatus> result = new List<PurchaseOrderStatus>();
+            using (POSContext context = new POSContext())
+            {
+                result = context.TPurchaseOrderStatus.ToList();
+            }
+            
+            return result;
+        }
+
+
 
     }
 }

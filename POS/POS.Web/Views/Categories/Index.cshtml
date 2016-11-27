@@ -1,0 +1,264 @@
+﻿@model IEnumerable<POS.ViewModel.CategoriesViewModel>
+
+@*//========================untuk menampilkan list Outlet================///*@
+<div class="form-inline">
+    
+    @*membuat untuk search categories*@
+    <div class="input-group col-md-12">
+        <input type="hidden" id="search-value" value="categories" />
+        <input type="text" id="search-text" class="form-control" placeholder="search key" />
+        <span class="input-group-btn">
+            <button class="btn btn-primary" id="btn-search-categories"><i class="fa fa-search"></i></button>
+        </span>
+
+        <div class="col-md-3" >
+            @Html.DropDownList("OutletID", (IEnumerable<SelectListItem>)ViewBag.ListOutlet, "=Outlet=", new { @class = "form-control" })
+        </div>
+        <div class="col-md-3">
+            <button type="button" id="btn-add" class="btn btn-tumblr">Create New</button>
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+
+    
+</div>
+
+
+
+@*//=======untuk membuat table yang di tampilkan pada index========//
+    //========diberikan id supaya bisa jadikan selector di jquery====//*@
+
+<div class="box" id="data-categories">
+
+</div>
+
+@*//=================Membuat Dropdownlist untuk Outlet ID==========//*@
+
+
+@*modal untuk menampilkan add*@
+<div id="modal-categories" class="modal modal-info fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    '&times;'
+                </button>
+            </div>
+            <div class="modal-body" id="modal-category-data">
+
+            </div>
+        </div>
+    </div>
+</div>
+@*============================ modal untuk menampilkan list items=============================================*@
+<div id="search-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 id="search-model-title" class="modal-title">List of Item</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="input-group">
+                <input type="hidden" id="type" class="form-control" value="item" />
+                <input type="text" id="search-txt" class="form-control" placeholder="Search Key" />
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" id="btn-src-modal"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+            <div class="row">
+                <div id="search-data" class="col-md-12">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        //========================================================Untuk Function LoadData==========================================================//
+        function loadData() {
+            $.ajax({
+                url: '@Url.Action("Load","Categories")',
+                dataType: 'html',
+                type: 'GET',
+                success: function (result) {
+                    $("#data-categories").html(result);
+                },
+            });
+        }
+        //=========================================================================================================================================//
+        //=================================kalo dokumen telah siap maka action untuk pemilihan Outlet dijalankan=================================//
+        $(document).ready(function () {
+            loadData();
+            $("#OutletID").change(function () {
+                var id = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("GetCategory","Categories")',
+                    data: { idOutlet: id },
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#data-categories").html(result);
+
+                    },
+                });
+            });
+
+            $("#btn-add").click(function (e) {
+                e.preventDefault();
+                //var id = $("#OutletID").val();
+                //alert(id);
+                $.ajax({
+                    url: '@Url.Action("Add","Categories")',
+                    dataType: 'html',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#modal-category-data').html(result);
+                        $('#modal-categories').modal('show');
+                    }
+                });
+            });
+
+            $('#modal-category-data').on('submit', '#form-categories', function () {
+                var vData = $(this).serialize();
+                var vUrl = $(this).attr("action");
+                var vmethod = $(this).attr("method");
+                $.ajax({
+                    url: vUrl,
+                    data: vData,
+                    method: vmethod,
+                    success: function (result) {
+                        if (result.success) {
+                            $("#modal-category-data").html(result);
+                        }
+                        else {
+                            $("#modal-categories").modal('hide');
+                            loadData();
+                        }
+                    },
+                });
+                return false;
+            });
+
+            $("#search-data").on("submit", "#form-items", function (e) {
+                //data ini nanti dikirim ke controller
+                //ajax ke controller
+                // datanya berupa list
+                var data = $("#search-data").find("#form-items").serialize();
+                var method = $("#search-data").find("#form-items").attr("method");
+                var action = $("#search-data").find("#form-items").attr("action");
+                //proses mengirim data ke controller dengan menggunakan ajax
+                // ini digunakan untuk mengkonversi Data yang kita gunakan menjadi Json
+                //alert("coba" + data);
+                $.ajax({
+                    // definisikan dulu data yang kita kirim adalah berupa list
+                    data: data,
+                    //dataType: 'html',
+                    method: method,
+                    url: action,
+                    success: function (result) {
+                        if (result.success) {
+                            $("#search-data").html(result);
+                        }
+                        else {
+                            $("#search-modal").modal("hide");
+                            loadData();
+                        }
+                    }
+                });
+                return false;
+            });
+
+            //===========================================================================================//
+            @* untuk memunculkan modal yang di tempati oleh list items*@
+            //===========================================================================================//
+            $("#data-categories").on("click", ".btn-assign", function (e) {
+                e.preventDefault();
+
+                $("#search-model-title").html("List of Items");
+                $("#search-type").val("items");
+                var vData = $(this).attr("data-id");
+                var vOutletId = $("#OutletID").val();
+                $.ajax({
+                    url: '@Url.Action("GetItems", "Categories")',
+                    dataType: 'html',
+                    type: 'GET',
+                    data: { categoryID: vData, outletId: vOutletId },
+                    success: function (result) {
+                        $("#search-data").html(result);
+                        $("#search-modal").modal('show');
+                    },
+                });
+            })
+            //================================================================================================================================//
+            @* untuk mengsubmit data category yang ingin di add*@
+            //================================================================================================================================//
+
+            //====================================================================//
+            @* Untuk mengedit Nama Kategori yang telah ada*@
+            //====================================================================//
+            $("#data-categories").on("click", ".btn-edit", function (e) {
+                e.preventDefault();
+                var vData = $(this).attr("data-id");
+                $.ajax({
+                    url: '@Url.Action("Edit", "Categories")',
+                    dataType: 'html',
+                    type: 'GET',
+                    data: { id: vData },
+                    success: function (result) {
+                        $("#search-data").html(result);
+                        $("#search-modal").modal('show');
+                    },
+                });
+            });
+            //==============================================================================//
+            @* Untuk mendelete kategori yang telah ada*@
+            //==============================================================================//
+            $("#data-categories").on("click", ".btn-delete", function (e) {
+                e.preventDefault();
+                var vData = $(this).attr("data-id");
+                $.ajax({
+                    url: '@Url.Action("Delete", "Categories")',
+                    dataType: 'html',
+                    type: 'GET',
+                    data: { id: vData },
+                    success: function (result) {
+                        $("#search-data").html(result);
+                        $("#search-modal").modal('show');
+                    },
+                });
+            });
+            //==========================================================================================================================================//
+            @*1. search key untuk mencari kategori*@
+            $("#btn-search-categories").click(function (e) {
+                e.preventDefault();
+                var Text = $("#search-text").val();
+                $.ajax({
+                    url: '@Url.Action("SearchCategories","AJAX")',
+                    dataType: 'html',
+                    type: 'GET',
+                    data: { searchkey: Text },
+                    success: function (result) {
+                        $("#data-categories").html(result);
+                    },
+                });
+            });
+
+            $("#search-modal").on("click", "#btn-src-modal", function (e) {
+                e.preventDefault();
+                var type = $("#type").val();
+                var text = $("#search-txt").val();
+                $.ajax({
+                    url: '@Url.Action("SearchItemsinCategories", "AJAX")',
+                    dataType: 'html',
+                    type: 'GET',
+                    data: { searchkey: text },
+                    success: function (result) {
+                        $("#search-data").html(result);
+                    },
+                });
+            });
+        });
+    </script>
+}

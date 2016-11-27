@@ -28,6 +28,9 @@ namespace POS.ViewModel
         [Display(Name = "StatusID")]
         public Nullable<int> StatusID { get; set; }
 
+        [Display(Name = "PO Detail ID")]
+        public List<int> PODetailID { get; set; }
+
         [Display(Name = "Status Name")]
         public string StatusName { get; set; }
 

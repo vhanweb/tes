@@ -53,5 +53,8 @@ namespace POS.ViewModel
 
         public string ItemVarName { get; set; }
         public string Name { get; set; }
+        [Display(Name = "Actual Stock")]
+        public Nullable<int> ActualStock { get; set; }
+        public string Note { get; set; }
     }
 }

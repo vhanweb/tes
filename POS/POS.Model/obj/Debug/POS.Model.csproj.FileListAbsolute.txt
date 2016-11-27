@@ -1,0 +1,34 @@
+E:\Documents\tes\POS\POS.Model\bin\Debug\POS.Model.dll
+E:\Documents\tes\POS\POS.Model\bin\Debug\POS.Model.pdb
+E:\Documents\tes\POS\POS.Model\bin\Debug\EntityFramework.dll
+E:\Documents\tes\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.dll
+E:\Documents\tes\POS\POS.Model\bin\Debug\EntityFramework.xml
+E:\Documents\tes\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.xml
+E:\Documents\tes\POS\POS.Model\obj\Debug\POS.Model.csprojResolveAssemblyReference.cache
+E:\Documents\tes\POS\POS.Model\obj\Debug\POS.Model.dll
+E:\Documents\tes\POS\POS.Model\obj\Debug\POS.Model.pdb
+H:\Yofan\POS\POS.Model\bin\Debug\POS.Model.dll
+H:\Yofan\POS\POS.Model\bin\Debug\POS.Model.pdb
+H:\Yofan\POS\POS.Model\bin\Debug\EntityFramework.dll
+H:\Yofan\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.dll
+H:\Yofan\POS\POS.Model\bin\Debug\EntityFramework.xml
+H:\Yofan\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.xml
+H:\Yofan\POS\POS.Model\obj\Debug\POS.Model.dll
+H:\Yofan\POS\POS.Model\obj\Debug\POS.Model.pdb
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.Model\bin\Debug\POS.Model.dll
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.Model\bin\Debug\POS.Model.pdb
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.Model\bin\Debug\EntityFramework.dll
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.dll
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.Model\bin\Debug\EntityFramework.xml
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.xml
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.Model\obj\Debug\POS.Model.csprojResolveAssemblyReference.cache
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.Model\obj\Debug\POS.Model.dll
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.Model\obj\Debug\POS.Model.pdb
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.Model\bin\Debug\POS.Model.dll
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.Model\bin\Debug\POS.Model.pdb
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.Model\bin\Debug\EntityFramework.dll
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.dll
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.Model\bin\Debug\EntityFramework.xml
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.Model\bin\Debug\EntityFramework.SqlServer.xml
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.Model\obj\Debug\POS.Model.dll
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.Model\obj\Debug\POS.Model.pdb

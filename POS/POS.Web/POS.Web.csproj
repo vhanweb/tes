@@ -176,6 +176,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdjustmentController.cs" />
     <Compile Include="Controllers\AJAXController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\SummaryController.cs" />
+    <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -578,12 +580,9 @@
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\AJAX\_ListCustomers.cshtml" />
     <Content Include="Views\AJAX\_ListItems.cshtml" />
-    <Content Include="Views\Payment\Add.cshtml" />
-    <Content Include="Views\Customers\Add.cshtml" />
     <Content Include="Views\Items\Add.cshtml" />
     <Content Include="Views\Items\AddVariant.cshtml" />
     <Content Include="Views\Items\Edit.cshtml" />
-    <Content Include="Views\Items\EditVariant.cshtml" />
     <Content Include="Views\Items\Index.cshtml" />
     <Content Include="Views\Items\MngInventory.cshtml" />
     <Content Include="Views\Items\_Index.cshtml" />
@@ -598,6 +597,28 @@
     <Content Include="Views\PurchaseOrder\Detail.cshtml" />
     <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\PurchaseOrder\OrderDetail.cshtml" />
+    <Content Include="Views\PurchaseOrder\Edit.cshtml" />
+    <Content Include="Views\Adjustment\_ListAdj.cshtml" />
+    <Content Include="Views\Items\Delete.cshtml" />
+    <Content Include="Views\Items\Delete2.cshtml" />
+    <Content Include="Views\PurchaseOrder\_Index.cshtml" />
+    <Content Include="Views\Payment\Add.cshtml" />
+    <Content Include="Views\Customers\Add.cshtml" />
+    <Content Include="Views\AJAX\_ListCategories.cshtml" />
+    <Content Include="Views\AJAX\_ListItems1.cshtml" />
+    <Content Include="Views\AJAX\_ListSuppliers.cshtml" />
+    <Content Include="Views\Categories\Add.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Categories\ListItems.cshtml" />
+    <Content Include="Views\Categories\_index.cshtml" />
+    <Content Include="Views\Suppliers\Add.cshtml" />
+    <Content Include="Views\Suppliers\Delete.cshtml" />
+    <Content Include="Views\Suppliers\Detail.cshtml" />
+    <Content Include="Views\Suppliers\Edit.cshtml" />
+    <Content Include="Views\Suppliers\Index.cshtml" />
+    <Content Include="Views\Suppliers\_index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

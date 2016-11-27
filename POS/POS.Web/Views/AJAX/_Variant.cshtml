@@ -1,19 +1,16 @@
-﻿@model IEnumerable<POS.ViewModel.TransferViewModel>
+﻿@model IEnumerable<POS.ViewModel.ItemIventoryViewModel>
 
 <table class="table">
     <tr>
-        
-        <th class="text-center">
-            @Html.DisplayNameFor(model => model.SKU)
-        </th>
+
         <th class="text-center">
             @Html.DisplayNameFor(model => model.VariantName)
         </th>
         <th class="text-center">
-            @Html.DisplayNameFor(model => model.InStock)
+            @Html.DisplayNameFor(model => model.Beginning)
         </th>
         <th class="text-center">
-            @Html.DisplayNameFor(model => model.Quantity)
+            @Html.DisplayNameFor(model => model.Transfer)
         </th>
 
     </tr>
@@ -21,21 +18,19 @@
     @foreach (var item in Model)
     {
         <tr>
-            
-            <td class="text-center">
-                @Html.DisplayFor(modelItem => item.SKU)
-            </td>
+
             <td class="text-center">
                 @Html.DisplayFor(modelItem => item.VariantName)
             </td>
             <td class="text-center">
-                @Html.DisplayFor(modelItem => item.InStock)
+                @Html.DisplayFor(modelItem => item.Beginning)
             </td>
             <td class="text-center">
+                @*<input type="text" class="form-control" name="Quantity" />*@
                 @Html.TextBoxFor(modelItem => item.Transfer, new { @class = "form-control item-transfer" })
             </td>
             <td class="col-md-1">
-                <button type="button" class="btn btn-warning btn-xs btn-ok-transfer" data-id="@item.VariantID" data-sku="@item.SKU" data-nama="@item.VariantName" data-instock="@item.InStock" data-transfer="@item.Transfer"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-warning btn-xs btn-ok-transfer" data-id="@item.VariantID" data-nama="@item.VariantName" data-instock="@item.Beginning" data-transfer="@item.Transfer"><i class="fa fa-check"></i></button>
             </td>
         </tr>
     }

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<POS.ViewModel.PurchaseOrderViewModel>
+
+<table class="table table-bordered ">
+    <thead>
+        <tr>
+            <th class="text-center col-md-2">
+                @Html.DisplayName("Date")
+            </th>
+            <th class="text-center col-md-2">
+                @Html.DisplayNameFor(model => model.Supplier)
+            </th>
+            <th class="text-center col-md-2">
+                @Html.DisplayNameFor(model => model.OrderNo)
+            </th>
+            <th class="text-center col-md-2">
+                @Html.DisplayName("Total")
+            </th>
+            <th class="text-center col-md-2">
+                @Html.DisplayName("Status")
+            </th>
+            <th class="text-center col-md-1">
+                Tools
+            </th>
+        </tr>
+    </thead>
+
+    <tbody class="text-center">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusName)
+                </td>
+
+                <td>
+                    <button type="button" class="btn btn-warning btn-xs btn-detail" data-id="@item.ID" data-status="@item.StatusID"><i class="glyphicon glyphicon-edit"></i></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

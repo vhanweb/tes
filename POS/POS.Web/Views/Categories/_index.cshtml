@@ -1,0 +1,34 @@
+﻿@model IEnumerable<POS.ViewModel.CategoriesViewModel>
+
+<table class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(model => model.ItemStock)
+            </th>
+            <th class="col-md-4"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.ItemStock)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-primary btn-assign" data-id="@item.ID">Assign To Item<i class="glyphicon glyphicon-arrow-up"></i></button>
+                    <button type="button" class="btn btn-sm btn-warning btn-edit" data-id="@item.ID">Edit<i class="glyphicon glyphicon-edit"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="@item.ID">Delete<i class="glyphicon glyphicon-trash"></i></button>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

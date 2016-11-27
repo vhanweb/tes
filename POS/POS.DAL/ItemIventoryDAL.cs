@@ -38,6 +38,65 @@ namespace POS.DAL
             return result;
         }
 
+        public static List<ItemIventoryViewModel> GetDataByOutletid(int OutletId)
+        {
+            List<ItemIventoryViewModel> result = new List<ItemIventoryViewModel>();
+            using (POSContext context = new POSContext())
+            {
+                result = (from ii in context.TItemsIventory
+                          join iv in context.TItemsVariant on ii.VariantID equals iv.ID
+                          where iv.OutletID == OutletId
+                          select new ItemIventoryViewModel()
+                          {
+                              ID = ii.ID,
+                              Adjusment = ii.Adjusment,
+                              AlertAt = ii.AlertAt,
+                              Beginning = ii.Beginning,
+                              PurchaseOrder = ii.PurchaseOrder,
+                              VariantID = ii.VariantID,
+                              VariantName = iv.VariantName,
+                              Transfer = ii.Transfer,
+                              Ending = ii.Ending,
+                              Sales = ii.Sales,
+                              ModifiedBy = ii.ModifiedBy,
+                              ModifiedOn = ii.ModifiedOn,
+                              CreatedBy = ii.CreatedBy,
+                              CreatedOn = ii.CreatedOn
+                          }).ToList();
+            }
+            return result;
+        }
+
+
+        public static List<ItemIventoryViewModel> GetDataByOutletSearch(string searchKey, int outletid)
+        {
+            List<ItemIventoryViewModel> result = new List<ItemIventoryViewModel>();
+            using (POSContext context = new POSContext())
+            {
+                result = (from ii in context.TItemsIventory
+                          join iv in context.TItemsVariant on ii.VariantID equals iv.ID
+                          where iv.VariantName.Contains(searchKey) && iv.OutletID == outletid
+                          select new ItemIventoryViewModel()
+                          {
+                              ID = ii.ID,
+                              Adjusment = ii.Adjusment,
+                              AlertAt = ii.AlertAt,
+                              Beginning = ii.Beginning,
+                              PurchaseOrder = ii.PurchaseOrder,
+                              VariantID = ii.VariantID,
+                              VariantName = iv.VariantName,
+                              Transfer = ii.Transfer,
+                              Ending = ii.Ending,
+                              Sales = ii.Sales,
+                              ModifiedBy = ii.ModifiedBy,
+                              ModifiedOn = ii.ModifiedOn,
+                              CreatedBy = ii.CreatedBy,
+                              CreatedOn = ii.CreatedOn
+                          }).ToList();
+            }
+            return result;
+        }
+
         public static List<ItemIventoryViewModel> GetDataBySearch(string searchKey)
         {
             List<ItemIventoryViewModel> result = new List<ItemIventoryViewModel>();
@@ -45,7 +104,7 @@ namespace POS.DAL
             {
                 result = (from ii in context.TItemsIventory
                           join iv in context.TItemsVariant on ii.VariantID equals iv.ID
-                          where  iv.VariantName.Contains(searchKey)
+                          where iv.VariantName.Contains(searchKey)
                           select new ItemIventoryViewModel()
                           {
                               ID = ii.ID,

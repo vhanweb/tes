@@ -9,14 +9,23 @@ using POS.DAL;
 
 namespace POS.Web.Controllers
 {
-    [Authorize]
     public class SummaryController : Controller
     {
         // GET: Summary
         public ActionResult Index()
         {
-           
-            return View(ItemIventoryDAL.GetDataSum());
+            List<ItemIventoryViewModel> model = ItemIventoryDAL.GetDataSum();
+            using (POSContext context = new POSContext())
+
+                foreach (var item in model)
+                {
+                    ItemsIventory data = context.TItemsIventory.Where(m => m.ID == item.ID).FirstOrDefault();
+                    data.Ending = item.Beginning + item.PurchaseOrder + item.Adjusment - item.Sales - item.Transfer;
+                    context.SaveChanges();
+                }
+
+
+            return View(model);
         }
     }
 }

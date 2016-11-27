@@ -25,10 +25,10 @@ namespace POS.DAL
                                 ToOutlet = ts.ToOutlet,
                                 Note = ts.Note,
                                 HeaderID = ts.ID,
-                                InStock = ii.Beginning,
-                                Quantity = ii.Transfer,
+                                //InStock = ii.Beginning,
+                                //Quantity = ii.Transfer,
                                 VariantName = iv.VariantName,
-                                SKU = iv.SKU,
+                                //SKU = iv.SKU,
                             }).ToList();
             }
 
@@ -53,10 +53,10 @@ namespace POS.DAL
                               ToOutlet = ts.ToOutlet,
                               Note = ts.Note,
                               HeaderID = ts.ID,
-                              InStock = ii.Beginning,
-                              Quantity = ii.Transfer,
+                              //InStock = ii.Beginning,
+                              //Quantity = ii.Transfer,
                               VariantName = iv.VariantName,
-                              SKU = iv.SKU,
+                              //SKU = iv.SKU,
 
                           }).OrderBy(iv => iv.VariantName).Take(10).ToList(); //.OrderBy(iv => iv.VariantName) ==>>> ditempakan sebelum take
             }

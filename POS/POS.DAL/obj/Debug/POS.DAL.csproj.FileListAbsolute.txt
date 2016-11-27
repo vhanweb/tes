@@ -1,0 +1,52 @@
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.DAL.dll
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.DAL.pdb
+E:\Documents\tes\POS\POS.DAL\bin\Debug\EntityFramework.dll
+E:\Documents\tes\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.dll
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.Model.dll
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.ViewModel.dll
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.Model.pdb
+E:\Documents\tes\POS\POS.DAL\bin\Debug\POS.ViewModel.pdb
+E:\Documents\tes\POS\POS.DAL\bin\Debug\EntityFramework.xml
+E:\Documents\tes\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\Documents\tes\POS\POS.DAL\obj\Debug\POS.DAL.csprojResolveAssemblyReference.cache
+E:\Documents\tes\POS\POS.DAL\obj\Debug\POS.DAL.dll
+E:\Documents\tes\POS\POS.DAL\obj\Debug\POS.DAL.pdb
+H:\Yofan\POS\POS.DAL\obj\Debug\POS.DAL.csprojResolveAssemblyReference.cache
+H:\Yofan\POS\POS.DAL\obj\Debug\POS.DAL.dll
+H:\Yofan\POS\POS.DAL\bin\Debug\POS.DAL.dll
+H:\Yofan\POS\POS.DAL\bin\Debug\POS.DAL.pdb
+H:\Yofan\POS\POS.DAL\bin\Debug\EntityFramework.dll
+H:\Yofan\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.dll
+H:\Yofan\POS\POS.DAL\bin\Debug\POS.Model.dll
+H:\Yofan\POS\POS.DAL\bin\Debug\POS.ViewModel.dll
+H:\Yofan\POS\POS.DAL\bin\Debug\POS.Model.pdb
+H:\Yofan\POS\POS.DAL\bin\Debug\POS.ViewModel.pdb
+H:\Yofan\POS\POS.DAL\bin\Debug\EntityFramework.xml
+H:\Yofan\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.xml
+H:\Yofan\POS\POS.DAL\obj\Debug\POS.DAL.pdb
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.DAL.dll
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.DAL.pdb
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\EntityFramework.dll
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.Model.dll
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.ViewModel.dll
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.Model.pdb
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.ViewModel.pdb
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\EntityFramework.xml
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\obj\Debug\POS.DAL.csprojResolveAssemblyReference.cache
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\obj\Debug\POS.DAL.dll
+D:\Xsis\BackUp-Gabung\Gabung-yo-an-han\POS\POS.DAL\obj\Debug\POS.DAL.pdb
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.DAL.dll
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.DAL.pdb
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\EntityFramework.dll
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.dll
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.Model.dll
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.ViewModel.dll
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.Model.pdb
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\POS.ViewModel.pdb
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\EntityFramework.xml
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\obj\Debug\POS.DAL.csprojResolveAssemblyReference.cache
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\obj\Debug\POS.DAL.dll
+E:\Bootcamp 95\POS Gabung\revisi\Gabung-yo-an-han\POS\POS.DAL\obj\Debug\POS.DAL.pdb
